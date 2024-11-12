@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*[x-cloak] {
+    display: none;
+}*/
+
+/* Color Theme Swatches in Hex */
+.color-hex-1 { color: #23211f; }
+.color-hex-2 { color: #F2BC1B; }
+.color-hex-3 { color: #8C030E; }
+.color-hex-4 { color: #A67A53; }
+.color-hex-5 { color: #BF8D50; }
+
+//colors variables
+$color-1: #23211f;
+$color-2: #F2BC1B;
+$color-3: #8C030E;
+$color-4: #A67A53;
+$color-5: #BF8D50;
+
+.button-primary  {
+    background-color: $color-2;
+    color: $color-1;
+    border: 1px solid $color-2;
+    padding: 7px 20px;
+    border-radius: 5px;
+}
+
+.button-primary:hover {
+    background-color: $color-1;
+    color: $color-2;
+    border: 1px solid $color-2;
+}
+
+.button-secondary {
+    background-color: $color-3;
+    color: $color-2;
+    border: 1px solid $color-3;
+    padding: 7px 20px;
+    border-radius: 5px;
+}
+.button-secondary:hover {
+    background-color: $color-2;
+    color: $color-3;
+    border: 1px solid $color-3;
+}
+
+.button-tertiary {
+    background-color: $color-4;
+    color: $color-1;
+    border: 1px solid $color-4;
+    padding: 7px 20px;
+    border-radius: 5px;
+}
+.button-tertiary:hover {
+    background-color: $color-1;
+    color: $color-4;
+    border: 1px solid $color-4;
+}
+
+
+.bg-fixed-full {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Ensures content stays above */
+}
+
+.blur-xs {
+    filter: blur(2px);
+}
+
+.blur-xs-and-brighten {
+    filter: blur(1px) brightness(0.6);
+}
+
+
+.fancy-underline {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.fancy-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="4"><path d="M0 2 Q25 4 50 2 T100 2" stroke="%23F2BC1B" fill="transparent" stroke-width="2"/></svg>') repeat-x;
+}
+
+.hero-height {
+    height: calc(100vh - 120px);
+}
+
+/* For mobile */
+@media screen and (max-width: 768px) {
+    .hero-height {
+        height: calc(100vh - 72px);
+    }
+}
+
+::selection {
+    background-color: #F2BC1B; /* Customize with your desired background color */
+    color: #23211F; /* Customize text color */
+}
+
+/* For Firefox */
+::-moz-selection {
+    background-color: #F2BC1B;
+    color: #23211F;
+}
+
+:root {
+    --tw-web-secondary: #F2BC1B;
+    --tw-web-primary: #23211F;
+}

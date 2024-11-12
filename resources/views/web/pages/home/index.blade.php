@@ -1,0 +1,10 @@
+@extends('web.layouts.layout1')
+@section('content')
+    @include('web.pages.home.hero')
+    @include('web.pages.home.services')
+    @include('web.pages.home.about')
+    @include('web.pages.home.testimonials')
+    @include('web.pages.home.contact')
+    @include('web.pages.home.map')
+    @include('web.pages.home.faqs')
+@endsection
