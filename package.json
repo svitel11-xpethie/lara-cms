@@ -21,6 +21,6 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
-        "lightgallery": "^2.8.1"
+        "photoswipe": "^5.4.4"
     }
 }

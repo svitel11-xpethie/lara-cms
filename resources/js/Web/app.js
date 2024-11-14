@@ -1,6 +1,6 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 import GalleryComponent from './components/GalleryComponent.vue';
 
-const app = createApp({});
-app.component('gallery-component', GalleryComponent);
-app.mount('#vue-app');
+createApp({
+    render: () => h(GalleryComponent),
+}).mount('#vue-app');

@@ -10,9 +10,9 @@ class HomeController extends Controller
     public function index()
     {
         $gallery_images = [
-            ['src' => '/images/gallery/image1.jpg', 'thumbnail' => '/images/gallery/thumb1.jpg', 'caption' => 'Caption 1'],
-            ['src' => '/images/gallery/image2.jpg', 'thumbnail' => '/images/gallery/thumb2.jpg', 'caption' => 'Caption 2'],
-            ['src' => '/images/gallery/image3.jpg', 'thumbnail' => '/images/gallery/thumb3.jpg', 'caption' => 'Caption 3'],
+            ['src' => '/assets/images/gallery/full/image1.jpg', 'thumb' => '/assets/images/gallery/thumb/image1.jpg', 'caption' => 'Caption 1', 'width' => 1400, 'height' => 800],
+            ['src' => '/assets/images/gallery/full/image2.jpg', 'thumb' => '/assets/images/gallery/thumb/image2.jpg', 'caption' => 'Caption 2', 'width' => 1400, 'height' => 800],
+            ['src' => '/assets/images/gallery/full/image3.jpg', 'thumb' => '/assets/images/gallery/thumb/image3.jpg', 'caption' => 'Caption 3', 'width' => 1400, 'height' => 800],
         ];
 
         return view('web.pages.home.index', [

@@ -99,6 +99,21 @@ $color-5: #BF8D50;
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="4"><path d="M0 2 Q25 4 50 2 T100 2" stroke="%23F2BC1B" fill="transparent" stroke-width="2"/></svg>') repeat-x;
 }
 
+.fancy-underline-secondary {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+}
+.fancy-underline-secondary::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="4"><path d="M0 2 Q25 4 50 2 T100 2" stroke="%238C030E" fill="transparent" stroke-width="2"/></svg>') repeat-x;
+}
+
 .hero-height {
     height: calc(100vh - 120px);
 }

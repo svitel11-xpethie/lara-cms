@@ -6,7 +6,8 @@
     @include('web.pages.home.statistics')
     @include('web.pages.home.services')
     @include('web.pages.home.testimonials')
+    @include('web.pages.home.blog')
     @include('web.pages.home.gallery')
-    @include('web.pages.home.map')
     @include('web.pages.home.faqs')
+    @include('web.pages.home.map')
 @endsection
