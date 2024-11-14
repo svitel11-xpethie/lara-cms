@@ -19,7 +19,7 @@
             <button class="block md:hidden focus:outline-none" id="menu-toggle">
                 <svg xmlns="http://www.w3.org/2000/svg"
                      class="size-10 text-web-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
         </div>
@@ -40,10 +40,13 @@
                     </div>
 
                     <ul class="absolute hidden min-w-[150px] group-hover:flex flex-col pt-[60px] text-web-primary font-bold z-10 space-y-2 p-2 rounded shadow-lg left-0 transition-all duration-300 opacity-0 transform scale-y-95 group-hover:opacity-100 group-hover:scale-y-100">
-                        <li><a href="index.html" class="block px-4 py-1 w-full hover:text-web-secondary">MultiPage</a>
-                        </li>
-                        <li><a href="index_singlepage.html" class="block px-4 py-1 w-full hover:text-web-secondary">Single
-                                Page</a></li>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="size-4 absolute left-0 top-0">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                        </svg>
+
+                        <li><a href="index.html" class="block px-4 py-1 w-full hover:text-web-secondary hover:text-opacity-70">MultiPage</a></li>
+                        <li><a href="index_singlepage.html" class="block px-4 py-1 w-full hover:text-web-secondary hover:text-opacity-70">Single Page</a></li>
                     </ul>
                 </li>
                 <li class="relative group">
@@ -56,7 +59,12 @@
                         </svg>
                     </div>
                     <ul class="absolute hidden min-w-[150px] group-hover:flex flex-col pt-[60px] text-web-primary font-bold z-10 space-y-2 p-2 rounded shadow-lg left-0 transition-all duration-300 opacity-0 transform scale-y-95 group-hover:opacity-100 group-hover:scale-y-100">
-                        <li><a href="about.html" class="block px-4 py-2 hover:text-web-secondary">About</a></li>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="size-4 absolute left-0 top-0">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                        </svg>
+
+                        <li><a href="about.html" class="block px-4 py-2 hover:text-web-secondary hover:text-opacity-70">About</a></li>
                     </ul>
                 </li>
             </ul>
@@ -78,10 +86,14 @@
                         </svg>
                     </div>
                     <ul class="absolute hidden min-w-[150px] group-hover:flex flex-col pt-[60px] text-web-primary font-bold z-10 space-y-2 p-2 rounded shadow-lg left-0 transition-all duration-300 opacity-0 transform scale-y-95 group-hover:opacity-100 group-hover:scale-y-100">
-                        <li><a href="services.html" class="block px-4 py-2 hover:text-web-secondary">All Services</a>
-                        </li>
-                        <li><a href="service-single.html" class="block px-4 py-2 hover:text-web-secondary">Single
-                                Service</a></li>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="size-4 absolute left-0 top-0">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                        </svg>
+
+
+                        <li><a href="services.html" class="block px-4 py-2 hover:text-web-secondary hover:text-opacity-70">All Services</a></li>
+                        <li><a href="service-single.html" class="block px-4 py-2 hover:text-web-secondary hover:text-opacity-70">Single Service</a></li>
                     </ul>
                 </li>
                 <li><a href="contact.html" class="hover:text-web-secondary font-bold">CONTACT</a></li>
@@ -101,23 +113,27 @@
 </header>
 
 <script>
+    // Toggle Mobile Menu
     document.getElementById('menu-toggle').addEventListener('click', function () {
         document.getElementById('mobile-menu').classList.toggle('hidden');
     });
 
-    /*window.addEventListener('scroll', function () {
-        const header = document.querySelector('header');
-        const initialOpacity = 0.5; // Starting opacity when the page loads
-        const maxOpacity = 1; // Maximum opacity when scrolling
-        const scrollFactor = 200; // Controls how quickly the opacity reaches max
+    // Change submenu background on scroll
+    window.addEventListener('scroll', function () {
+        const submenus = document.querySelectorAll('nav ul li ul'); // Target all submenus
+        const scrollPosition = window.scrollY;
 
-        const opacity = Math.min(maxOpacity, initialOpacity + window.scrollY / scrollFactor);
-        header.style.backgroundColor = `rgba(35, 33, 31, ${opacity})`; // RGB equivalent of web-primary
-    });*/
-
-    // Set initial opacity when page loads
-    /*document.addEventListener('DOMContentLoaded', function () {
-        const header = document.querySelector('header');
-        header.style.backgroundColor = `rgba(35, 33, 31, 0.5)`; // Initial opacity set to 0.5
-    });*/
+        submenus.forEach(submenu => {
+            if (scrollPosition > 100) {
+                submenu.classList.add('bg-web-primary');
+                submenu.classList.add('bg-opacity-90');
+                submenu.classList.add('text-web-secondary');
+            } else {
+                submenu.classList.remove('text-web-secondary');
+                submenu.classList.remove('bg-opacity-90');
+                submenu.classList.remove('bg-web-primary');
+            }
+        });
+    });
 </script>
+
