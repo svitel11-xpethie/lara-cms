@@ -76,7 +76,7 @@
                             <div class="ml-0.5">
                                 <label for="preferred-hour" class="block text-gray-700 font-bold text-sm">Hour</label>
                                 <input type="time" id="preferred-hour" name="preferred_hour" required
-                                       class="w-full p-2 border border-gray-300 rounded">
+                                       class="w-full p-2 min-w-[50px] border border-gray-300 rounded">
                             </div>
 
                         </div>
