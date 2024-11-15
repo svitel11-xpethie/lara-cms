@@ -11,4 +11,6 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
 });

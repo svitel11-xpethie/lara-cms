@@ -46,6 +46,19 @@ export default {
                     fifth: '#F2DCEC',
                     green: '#00af70'
                 },
+                blue: {
+                    600: '#1D4ED8',
+                    700: '#1E40AF',
+                    500: '#3B82F6',
+                },
+                gray: {
+                    600: '#4B5563',
+                    700: '#374151',
+                },
+                red: {
+                    600: '#DC2626',
+                    700: '#B91C1C',
+                },
             },
             animation: {
                 fadeIn: 'fadeIn 0.5s ease-in-out',
