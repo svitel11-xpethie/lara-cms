@@ -21,6 +21,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "@heroicons/vue": "^2.1.5",
         "photoswipe": "^5.4.4"
     }
 }

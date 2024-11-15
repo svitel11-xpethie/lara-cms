@@ -31,41 +31,31 @@
             <ul class="flex space-x-6">
                 <li class="relative group">
                     <div class="flex items-center cursor-pointer hover:text-web-secondary transition-colors">
-                        <a href="index.html" class="hover:text-web-secondary font-bold">HOME</a>
+                        <a href="{{route('home')}}" class="hover:text-web-secondary font-bold">HOME</a>
+                    </div>
+                </li>
+                <li class="relative group">
+                    <div class="flex items-center cursor-pointer hover:text-web-secondary transition-colors">
+                        <a href="{{route('about-us')}}" class="hover:text-web-secondary font-bold">ABOUT US</a>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor"
                              class="size-4 ml-1">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     </div>
-
                     <ul class="absolute hidden min-w-[150px] group-hover:flex flex-col pt-[60px] text-web-primary font-bold z-10 space-y-2 p-2 rounded shadow-lg left-0 transition-all duration-300 opacity-0 transform scale-y-95 group-hover:opacity-100 group-hover:scale-y-100">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                              class="size-4 absolute left-0 top-0">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
                         </svg>
 
-                        <li><a href="index.html" class="block px-4 py-1 w-full hover:text-web-secondary hover:text-opacity-70">MultiPage</a></li>
-                        <li><a href="index_singlepage.html" class="block px-4 py-1 w-full hover:text-web-secondary hover:text-opacity-70">Single Page</a></li>
+                        <li><a href="{{route('faq')}}" class="block px-4 py-2 hover:text-web-secondary hover:text-opacity-70">FAQ</a></li>
                     </ul>
                 </li>
                 <li class="relative group">
                     <div class="flex items-center cursor-pointer hover:text-web-secondary transition-colors">
-                        <a href="index.html" class="hover:text-web-secondary font-bold">PAGES</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor"
-                             class="size-4 ml-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                        </svg>
+                        <a href="{{route('booking')}}" class="hover:text-web-secondary font-bold">BOOKING</a>
                     </div>
-                    <ul class="absolute hidden min-w-[150px] group-hover:flex flex-col pt-[60px] text-web-primary font-bold z-10 space-y-2 p-2 rounded shadow-lg left-0 transition-all duration-300 opacity-0 transform scale-y-95 group-hover:opacity-100 group-hover:scale-y-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                             class="size-4 absolute left-0 top-0">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-                        </svg>
-
-                        <li><a href="about.html" class="block px-4 py-2 hover:text-web-secondary hover:text-opacity-70">About</a></li>
-                    </ul>
                 </li>
             </ul>
 
@@ -78,7 +68,7 @@
             <ul class="flex space-x-6">
                 <li class="relative group">
                     <div class="flex items-center cursor-pointer hover:text-web-secondary transition-colors">
-                        <a href="index.html" class="hover:text-web-secondary font-bold">SERVICES</a>
+                        <a href="{{route('services')}}" class="hover:text-web-secondary font-bold">SERVICES</a>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor"
                              class="size-4 ml-1">
@@ -96,7 +86,8 @@
                         <li><a href="service-single.html" class="block px-4 py-2 hover:text-web-secondary hover:text-opacity-70">Single Service</a></li>
                     </ul>
                 </li>
-                <li><a href="contact.html" class="hover:text-web-secondary font-bold">CONTACT</a></li>
+                <li><a href="{{route('gallery')}}" class="hover:text-web-secondary font-bold">GALLERY</a></li>
+                <li><a href="{{route('contact-us')}}" class="hover:text-web-secondary font-bold">CONTACT</a></li>
             </ul>
         </nav>
     </div>

@@ -1,79 +1,44 @@
-<script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
-
-const props = defineProps({
-    align: {
-        type: String,
-        default: 'right',
-    },
-    width: {
-        type: String,
-        default: '48',
-    },
-    contentClasses: {
-        type: Array,
-        default: () => ['py-1', 'bg-white'],
-    },
-});
-
-let open = ref(false);
-
-const closeOnEscape = (e) => {
-    if (open.value && e.key === 'Escape') {
-        open.value = false;
-    }
-};
-
-onMounted(() => document.addEventListener('keydown', closeOnEscape));
-onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
-
-const widthClass = computed(() => {
-    return {
-        '48': 'w-48',
-    }[props.width.toString()];
-});
-
-const alignmentClasses = computed(() => {
-    if (props.align === 'left') {
-        return 'ltr:origin-top-left rtl:origin-top-right start-0';
-    }
-
-    if (props.align === 'right') {
-        return 'ltr:origin-top-right rtl:origin-top-left end-0';
-    }
-
-    return 'origin-top';
-});
-</script>
-
 <template>
-    <div class="relative">
-        <div @click="open = ! open">
-            <slot name="trigger" />
-        </div>
-
-        <!-- Full Screen Dropdown Overlay -->
-        <div v-show="open" class="fixed inset-0 z-40" @click="open = false" />
-
-        <transition
-            enter-active-class="transition ease-out duration-200"
-            enter-from-class="transform opacity-0 scale-95"
-            enter-to-class="transform opacity-100 scale-100"
-            leave-active-class="transition ease-in duration-75"
-            leave-from-class="transform opacity-100 scale-100"
-            leave-to-class="transform opacity-0 scale-95"
+    <div>
+        <button
+            @click="toggle"
+            class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-left text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none"
         >
-            <div
-                v-show="open"
-                class="absolute z-50 mt-2 rounded-md shadow-lg"
-                :class="[widthClass, alignmentClasses]"
-                style="display: none;"
-                @click="open = false"
-            >
-                <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
-                    <slot name="content" />
-                </div>
-            </div>
+            <span>{{ title }}</span>
+            <svg v-if="!isOpen" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+            </svg>
+        </button>
+        <transition name="slide-down">
+            <ul v-show="isOpen" class="mt-2 space-y-2">
+                <li v-for="item in items" :key="item" class="pl-6">
+                    <Link :href="item.link" class="text-gray-600 hover:text-gray-900">{{ item.name }}</Link>
+                </li>
+            </ul>
         </transition>
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+const isOpen = ref(false);
+const toggle = () => (isOpen.value = !isOpen.value);
+defineProps(['title', 'items']);
+</script>
+
+<style scoped>
+.slide-down-enter-active, .slide-down-leave-active {
+    transition: all 0.3s ease-in-out;
+}
+.slide-down-enter-from {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+.slide-down-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+</style>

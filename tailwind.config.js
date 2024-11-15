@@ -39,12 +39,26 @@ export default {
                     fifth: '#BF8D50',
                 },
                 admin: {
-                    primary: '#0d0d0d',
-                    secondary: '#f2d129',
+                    primary: '#1f2937',
+                    secondary: '#374151',
                     third: '#773e02',
                     fourth: '#BFA38A',
                     fifth: '#F2DCEC',
                     green: '#00af70'
+                },
+            },
+            animation: {
+                fadeIn: 'fadeIn 0.5s ease-in-out',
+                slideDown: 'slideDown 0.3s ease-in-out',
+            },
+            keyframes: {
+                fadeIn: {
+                    from: { opacity: 0 },
+                    to: { opacity: 1 },
+                },
+                slideDown: {
+                    from: { transform: 'translateY(-10px)' },
+                    to: { transform: 'translateY(0)' },
                 },
             },
         },
@@ -52,7 +66,7 @@ export default {
 
     plugins: [
         forms, typography,
-        function ({addUtilities}) {
+        function ({ addUtilities }) {
             const newUtilities = {
                 '.content-h': {
                     height: 'calc(100vh - 64px)',
