@@ -120,6 +120,9 @@
 
     // Change submenu background on scroll
     window.addEventListener('scroll', function () {
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) return;
+
         const submenus = document.querySelectorAll('nav ul li ul'); // Target all submenus
         const scrollPosition = window.scrollY;
 

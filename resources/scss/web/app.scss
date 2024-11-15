@@ -91,6 +91,10 @@ $color-5: #BF8D50;
         filter: blur(1px) brightness(0.6); /* Mobile blur */
         -webkit-filter: blur(1px) brightness(0.6);
     }
+
+    .bg-fixed-full {
+        background-size: contain; /* Switch to contain on smaller screens */
+    }
 }
 
 .fancy-underline {
