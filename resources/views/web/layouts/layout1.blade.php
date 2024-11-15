@@ -18,8 +18,10 @@
 </head>
 <body>
 <div class="bg-fixed-full blur-xs-and-brighten xs:hidden" style="background-image: url('/assets/images/1st-car-recovery-bg.webp');"></div>
-<div class="bg-fixed-full blur-xs-and-brighten md:hidden" style="background-image: url('/assets/images/1-st-car-recovery-mobile-bg.webp');"></div>
-
+{{--<div class="bg-fixed-full blur-xs-and-brighten md:hidden" style="background-image: url('/assets/images/1-st-car-recovery-mobile-bg.webp');"></div>--}}
+<div class="fixed inset-0 -z-10 md:hidden">
+    <img src="/assets/images/1-st-car-recovery-mobile-bg.webp" alt="Background" class="object-cover w-full h-full">
+</div>
 @include('web.partials.header')
 
 @yield('content')
