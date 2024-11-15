@@ -74,6 +74,15 @@ $color-5: #BF8D50;
     z-index: -1; /* Ensures content stays above */
 }
 
+.bg-mobile-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Ensures content stays above */
+}
+
 .blur-xs {
     filter: blur(2px);
 }
