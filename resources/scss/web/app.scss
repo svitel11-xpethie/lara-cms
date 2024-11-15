@@ -77,11 +77,21 @@ $color-5: #BF8D50;
 .blur-xs {
     filter: blur(2px);
 }
-
 .blur-xs-and-brighten {
-    filter: blur(1px) brightness(0.6);
+    filter: blur(3px) brightness(0.6);
 }
 
+.blur-xs-and-brighten {
+    filter: blur(5px); /* Default blur */
+    -webkit-filter: blur(5px);
+}
+
+@media (max-width: 768px) {
+    .blur-xs-and-brighten {
+        filter: blur(1px) brightness(0.6); /* Mobile blur */
+        -webkit-filter: blur(1px) brightness(0.6);
+    }
+}
 
 .fancy-underline {
     position: relative;
