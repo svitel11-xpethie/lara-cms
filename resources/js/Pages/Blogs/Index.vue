@@ -14,6 +14,7 @@ const deleteBlog = (id) => {
         axios.delete(route('admin.blogs.destroy', id))
             .then(() => {
                 const idx = originalBlogs.value.findIndex(blog => blog.id === id);
+                console.log(idx);
                 originalBlogs.value.splice(idx, 1);
             })
             .catch((error) => {
@@ -69,7 +70,7 @@ const deleteBlog = (id) => {
 
                             <!-- Delete Button -->
                             <button
-                                @click="deleteBlog(blog.id)"
+                                @click.prevent="deleteBlog(blog.id)"
                                 class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
                                 <TrashIcon class="w-5 h-4 mr-1"/>
                                 Delete

@@ -67,7 +67,8 @@ class BlogController extends Controller
     public function destroy(Blog $blog)
     {
         $blog->delete();
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted successfully!');
+        //return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted successfully!');
+        return response()->json(['message' => 'Blog deleted successfully']);
     }
 
     private function handleImageUpload($image, $path, $resizeWidth = null)
