@@ -51,9 +51,9 @@ class BlogController extends Controller
             $data['image_thumb'] = $this->handleImageUpload($image, 'blogs/thumbs', 300);
 
             // Delete old images if they exist
-            if ($blog->image && file_exists(public_path('assets/images/' . $blog->image))) {
-                unlink(public_path('assets/images/' . $blog->image));
-                unlink(public_path('assets/images/' . $blog->image_thumb));
+            if ($blog->image && file_exists(public_path($blog->image))) {
+                unlink(public_path($blog->image));
+                unlink(public_path($blog->image_thumb));
             }
         }
 
@@ -74,7 +74,7 @@ class BlogController extends Controller
     {
         // Generate a unique filename
         $filename = time() . '_' . Str::random(10) . '.webp';
-        $destination = public_path('assets/images/' . $path);
+        $destination = public_path(self::IMAGES_PATH . $path);
 
         // Ensure directory exists
         if (!is_dir($destination)) {
@@ -91,7 +91,7 @@ class BlogController extends Controller
 
         $imageInstance->save($destination . '/' . $filename, 80); // Save with compression
 
-        return $path . '/' . $filename;
+        return self::IMAGES_PATH . $path . '/' . $filename;
     }
 
     public function generateMetaFromContent($content)

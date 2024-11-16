@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, computed } from 'vue';
 
 // Props for flexibility
 defineProps({
@@ -23,12 +23,21 @@ defineProps({
         type: Boolean,
         default: false,
     },
+    href: {
+        type: String,
+        default: null,
+    },
+    target: {
+        type: String,
+        default: '_self', // for links (_self, _blank, etc.)
+    },
 });
 
 // Emit click event
 defineEmits(['click']);
 
-const classes = {
+// Dynamic classes
+const classes = computed(() => ({
     base: 'inline-flex items-center justify-center font-medium rounded focus:outline-none focus:ring-2 transition',
     variants: {
         primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
@@ -40,24 +49,28 @@ const classes = {
         md: 'px-4 py-2 text-md',
         lg: 'px-6 py-3 text-lg',
     },
-};
+    disabled: 'opacity-50 cursor-not-allowed',
+}));
 </script>
 
 <template>
-    <button
-        :type="type"
-        :disabled="disabled || loading"
+    <component
+        :is="href ? 'a' : 'button'"
+        :href="href"
+        :target="href ? target : null"
+        :type="!href ? type : null"
+        :disabled="!href && (disabled || loading)"
         :class="[
             classes.base,
             classes.variants[variant] || classes.variants.primary,
             classes.sizes[size] || classes.sizes.md,
-            { 'opacity-50 cursor-not-allowed': disabled || loading },
+            { [classes.disabled]: disabled || loading },
         ]"
-        @click="$emit('click')"
+        @click="!href && $emit('click')"
     >
         <span v-if="loading" class="loader mr-2"></span>
-        <slot />
-    </button>
+        <slot/>
+    </component>
 </template>
 
 <style scoped>
