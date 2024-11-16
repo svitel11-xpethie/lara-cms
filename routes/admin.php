@@ -12,5 +12,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
+    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)
+        ->except(['update']); // Exclude default update route
+    Route::post('blogs/{blog}', [\App\Http\Controllers\Admin\BlogController::class, 'update'])->name('blogs.update');
 });

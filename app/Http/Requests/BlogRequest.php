@@ -25,8 +25,19 @@ class BlogRequest extends FormRequest
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'order' => 'nullable|integer|min:0',
+            'is_active' => 'nullable|boolean',
+
             'meta_tags' => 'nullable|array',
-            'meta_tags.*' => 'nullable|string|max:255',
+            'meta_tags.seo_title' => 'nullable|string|max:255',
+            'meta_tags.seo_description' => 'nullable|string|max:255',
+            'meta_tags.facebook_title' => 'nullable|string|max:255',
+            'meta_tags.facebook_description' => 'nullable|string|max:255',
+            'meta_tags.twitter_title' => 'nullable|string|max:255',
+            'meta_tags.twitter_description' => 'nullable|string|max:255',
+
+            'meta_data' => 'nullable|array',
+            'meta_data.*' => 'nullable|string|max:255',
         ];
     }
 }

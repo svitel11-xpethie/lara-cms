@@ -3,22 +3,22 @@
         <!-- Toolbar -->
         <div class="flex flex-wrap space-x-2 mb-4">
             <!-- Bold -->
-            <button @click="toggleBold" :class="{ 'bg-gray-300': isBoldActive }" class="p-1 bg-white w-8 h-8 border rounded font-bold">B</button>
+            <button @click.prevent="toggleBold" :class="{ 'bg-gray-300': isBoldActive }" class="p-1 bg-white w-8 h-8 border rounded font-bold">B</button>
 
             <!-- Italic -->
-            <button @click="toggleItalic" :class="{ 'bg-gray-300': isItalicActive }" class="p-1 bg-white w-8 h-8 border rounded italic">I</button>
+            <button @click.prevent="toggleItalic" :class="{ 'bg-gray-300': isItalicActive }" class="p-1 bg-white w-8 h-8 border rounded italic">I</button>
 
             <!-- Underline -->
-            <button @click="toggleUnderline" :class="{ 'bg-gray-300': isUnderlineActive }" class="p-1 bg-white w-8 h-8 border rounded underline">U</button>
+            <button @click.prevent="toggleUnderline" :class="{ 'bg-gray-300': isUnderlineActive }" class="p-1 bg-white w-8 h-8 border rounded underline">U</button>
 
             <!-- Superscript -->
-            <button @click="toggleSuperscript" :class="{ 'bg-gray-300': isSuperscriptActive }" class="p-1 bg-white w-8 h-8 border rounded">S<sup>up</sup></button>
+            <button @click.prevent="toggleSuperscript" :class="{ 'bg-gray-300': isSuperscriptActive }" class="p-1 bg-white w-8 h-8 border rounded">S<sup>up</sup></button>
 
             <!-- Subscript -->
-            <button @click="toggleSubscript" :class="{ 'bg-gray-300': isSubscriptActive }" class="p-1 bg-white w-8 h-8 border rounded">S<sub>ub</sub></button>
+            <button @click.prevent="toggleSubscript" :class="{ 'bg-gray-300': isSubscriptActive }" class="p-1 bg-white w-8 h-8 border rounded">S<sub>ub</sub></button>
 
             <!-- Highlight -->
-            <button @click="toggleHighlight" :class="{ 'bg-gray-300': isHighlightActive }" class="p-1 bg-white h-8 border rounded"><span class="bg-yellow-200">High</span>light</button>
+            <button @click.prevent="toggleHighlight" :class="{ 'bg-gray-300': isHighlightActive }" class="p-1 bg-white h-8 border rounded"><span class="bg-yellow-200">High</span>light</button>
 
             <!-- Text Color -->
             <label class="p-1 bg-white h-8 border rounded flex items-center">Text Color
@@ -32,27 +32,39 @@
                 <option value="monospace">Monospace</option>
             </select>
 
+            <select @change="setFontSize($event.target.value)" class="p-1 bg-white h-8 w-[100px] border rounded">
+                <option value="12px">12px</option>
+                <option value="14px">14px</option>
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px">20px</option>
+                <option value="24px">24px</option>
+                <option value="28px">28px</option>
+                <option value="32px">32px</option>
+                <option value="36px">36px</option>
+            </select>
+
             <!-- Text Alignment -->
-            <button @click="setTextAlign('left')" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><Bars3BottomLeftIcon class="w-4 h-4" /></button>
-            <button @click="setTextAlign('center')" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><Bars3Icon class="w-4 h-4"/></button>
-            <button @click="setTextAlign('right')" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><Bars3BottomRightIcon class="w-4 h-4"/></button>
+            <button @click.prevent="setTextAlign('left')" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><Bars3BottomLeftIcon class="w-4 h-4" /></button>
+            <button @click.prevent="setTextAlign('center')" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><Bars3Icon class="w-4 h-4"/></button>
+            <button @click.prevent="setTextAlign('right')" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><Bars3BottomRightIcon class="w-4 h-4"/></button>
 
             <!-- Insert Image -->
-            <button @click="addImage" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center">
+            <button @click.prevent="addImage" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center">
                 <PhotoIcon class="w-5 h-5" />
             </button>
 
             <!-- Task List -->
-            <button @click="toggleTaskList" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><QueueListIcon class="w-5 h-5" /></button>
+            <button @click.prevent="toggleTaskList" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><QueueListIcon class="w-5 h-5" /></button>
 
             <!-- Bullet List -->
-            <button @click="toggleBulletList" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><ListBulletIcon class="w-5 h-5" /></button>
+            <button @click.prevent="toggleBulletList" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><ListBulletIcon class="w-5 h-5" /></button>
 
             <!-- Ordered List -->
-            <button @click="toggleOrderedList" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><NumberedListIcon class="w-5 h-5" /></button>
+            <button @click.prevent="toggleOrderedList" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><NumberedListIcon class="w-5 h-5" /></button>
 
             <!-- Table -->
-            <button @click="insertTable" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><TableCellsIcon class="w-5 h-5" /></button>
+            <button @click.prevent="insertTable" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><TableCellsIcon class="w-5 h-5" /></button>
         </div>
 
         <!-- Editor Content -->
@@ -62,7 +74,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-import { Editor, EditorContent } from '@tiptap/vue-3';
+import { Editor, EditorContent, Extension} from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import Color from '@tiptap/extension-color';
@@ -80,6 +92,8 @@ import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
+import TextStyle from '@tiptap/extension-text-style';
+
 
 import {Bars3BottomLeftIcon, Bars3Icon, Bars3BottomRightIcon, PhotoIcon, ListBulletIcon, TableCellsIcon, QueueListIcon, NumberedListIcon} from "@heroicons/vue/16/solid/index.js";
 
@@ -88,6 +102,47 @@ const props = defineProps({
     modelValue: {
         type: String,
         required: true,
+    },
+});
+
+const FontSize = Extension.create({
+    name: 'fontSize',
+
+    addOptions() {
+        return {
+            types: ['textStyle'],
+        };
+    },
+
+    addGlobalAttributes() {
+        return [
+            {
+                types: this.options.types,
+                attributes: {
+                    fontSize: {
+                        default: null,
+                        parseHTML: element => element.style.fontSize || null,
+                        renderHTML: attributes => {
+                            if (!attributes.fontSize) {
+                                return {};
+                            }
+
+                            return {
+                                style: `font-size: ${attributes.fontSize}`,
+                            };
+                        },
+                    },
+                },
+            },
+        ];
+    },
+
+    addCommands() {
+        return {
+            setFontSize: size => ({ chain }) => {
+                return chain().setMark('textStyle', { fontSize: size }).run();
+            },
+        };
     },
 });
 
@@ -112,11 +167,18 @@ onMounted(() => {
             TaskItem.configure({ nested: true }),
             BulletList,
             OrderedList,
-            Table.configure({ resizable: true }),
+            Table.configure({
+                resizable: true,
+                HTMLAttributes: {
+                    class: 'border-collapse border border-gray-300',
+                },
+            }),
             TableRow,
             TableCell,
             TableHeader,
             Image.configure({ inline: true }),
+            TextStyle,
+            FontSize,
         ],
         onUpdate: ({ editor }) => {
             emit('update:modelValue', editor.getHTML());
@@ -160,6 +222,7 @@ const toggleTaskList = () => editor.value.chain().focus().toggleTaskList().run()
 const toggleBulletList = () => editor.value.chain().focus().toggleBulletList().run();
 const toggleOrderedList = () => editor.value.chain().focus().toggleOrderedList().run();
 const insertTable = () => editor.value.chain().focus().insertTable({rows: 3, cols: 3}).run();
+const setFontSize = (size) => editor.value.chain().focus().setFontSize(size).run();
 
 // Active state refs
 const isBoldActive = ref(false);
@@ -198,5 +261,119 @@ const watchEditorActiveStates = () => {
 .ProseMirror:focus {
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
     border: none;
+}
+
+.tiptap {
+    :first-child {
+        margin-top: 0;
+    }
+
+    /* Table-specific styling */
+    table {
+        border-collapse: collapse;
+        margin: 0;
+        overflow: hidden;
+        table-layout: fixed;
+        width: 100%;
+
+        td,
+        th {
+            border: 1px solid #d3d3d3;
+            box-sizing: border-box;
+            min-width: 1em;
+            padding: 6px 8px;
+            position: relative;
+            vertical-align: top;
+
+            > * {
+                margin-bottom: 0;
+            }
+        }
+
+        th {
+            background-color: #efefef;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .selectedCell:after {
+            background: #878788;
+            content: "";
+            left: 0; right: 0; top: 0; bottom: 0;
+            pointer-events: none;
+            position: absolute;
+            z-index: 2;
+        }
+
+        .column-resize-handle {
+            background-color: #6f6fef;
+            bottom: -2px;
+            pointer-events: none;
+            position: absolute;
+            right: -2px;
+            top: 0;
+            width: 4px;
+        }
+    }
+
+    .tableWrapper {
+        margin: 1.5rem 0;
+        overflow-x: auto;
+    }
+
+    &.resize-cursor {
+        cursor: ew-resize;
+        cursor: col-resize;
+    }
+
+    /* List styles */
+    ul,
+    ol {
+        list-style-type: decimal;
+        padding: 0 1rem;
+        margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+        li p {
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+        }
+    }
+
+    ul {
+        list-style: disc;
+    }
+
+    ol {
+        list-style: decimal;
+    }
+    /* Task list specific styles */
+    ul[data-type="taskList"] {
+        list-style: none;
+        margin-left: 0;
+        padding: 0;
+
+        li {
+            align-items: flex-start;
+            display: flex;
+
+            > label {
+                flex: 0 0 auto;
+                margin-right: 0.5rem;
+                user-select: none;
+            }
+
+            > div {
+                flex: 1 1 auto;
+            }
+        }
+
+        input[type="checkbox"] {
+            cursor: pointer;
+        }
+
+        ul[data-type="taskList"] {
+            margin: 0;
+        }
+    }
 }
 </style>

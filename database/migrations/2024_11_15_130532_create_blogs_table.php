@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('order')->default(0);
             $table->integer('views')->default(0);
             $table->json('meta_tags')->nullable(); // For SEO
+            $table->json('meta_data')->nullable(); // For SEO
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

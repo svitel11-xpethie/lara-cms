@@ -12,9 +12,20 @@
 </template>
 
 <script setup>
-defineProps({
-    modelValue: String, // For v-model
-    label: String,
-    name: String,
+const props = defineProps({
+    modelValue: {
+        type: [String, Number],
+        required: true,
+    },
+    label:{
+        type: String,
+        required: false,
+        default: 'Enter text here',
+    },
+    name:{
+        type: String,
+        required: false,
+        default: 'text',
+    },
 });
 </script>

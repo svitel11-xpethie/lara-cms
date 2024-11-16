@@ -5,7 +5,8 @@ import TextInput from '@/Shared/TextInput.vue';
 import TiptapEditor from '@/Shared/TiptapEditor.vue';
 import FileUpload from '@/Shared/FileUpload.vue'; // A reusable file uploader
 import Textarea from '@/Shared/Textarea.vue';
-import AppLayout from "@/Layouts/AppLayout.vue"; // Use correct layout component
+import AppLayout from "@/Layouts/AppLayout.vue";
+import Checkbox from "@/Shared/Checkbox.vue"; // Use correct layout component
 
 const form = useForm({
     title: '',
@@ -20,6 +21,7 @@ const form = useForm({
         twitter_description: '',
     },
     order: 0,
+    is_active: true,
 });
 
 const submit = () => {
@@ -70,6 +72,15 @@ const submit = () => {
             <!-- Order -->
             <div>
                 <TextInput v-model="form.order" label="Order" type="number" placeholder="Enter display order" />
+            </div>
+
+            <div>
+                <Checkbox
+                    v-model="form.is_active"
+                    id="is_active"
+                    name="is_active"
+                    label="Active Status"
+                />
             </div>
 
             <!-- Submit Button -->
