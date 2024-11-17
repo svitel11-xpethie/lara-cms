@@ -1,29 +1,3 @@
-@php
-    $blogs = [
-        [
-            'title' => 'Understanding Car Recovery Services',
-            'excerpt' => 'Learn the ins and outs of car recovery services and how they can help in emergencies.',
-            'image' => '/assets/images/blogs/thumb/image1.jpg',
-            'date' => 'November 1, 2024',
-            'link' => '/blogs/understanding-car-recovery-services',
-        ],
-        [
-            'title' => 'Top Tips for Roadside Assistance',
-            'excerpt' => 'Discover essential tips to ensure your safety during roadside emergencies.',
-            'image' => '/assets/images/blogs/thumb/image2.jpg',
-            'date' => 'October 20, 2024',
-            'link' => '/blogs/top-tips-roadside-assistance',
-        ],
-        [
-            'title' => 'When to Call for Emergency Towing',
-            'excerpt' => 'Know the signs when emergency towing is your best option.',
-            'image' => '/assets/images/blogs/thumb/image3.jpg',
-            'date' => 'October 15, 2024',
-            'link' => '/blogs/when-to-call-emergency-towing',
-        ],
-    ];
-@endphp
-
 <section id="latest-blogs" class="py-16 bg-web-primary bg-opacity-50">
     <div class="container mx-auto text-center">
         <div class="section-title w-full text-center my-8">
@@ -32,13 +6,13 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            @foreach($blogs as $blog)
+            @foreach($blog_posts as $blog)
                 <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-left">
-                    <img src="{{ $blog['image'] }}" alt="{{ $blog['title'] }}" class="rounded h-40 w-full object-cover mb-4">
+                    <img src="{{ $blog['image_thumb'] }}" alt="{{ $blog['title'] }}" class="rounded h-40 w-full object-cover mb-4">
                     <h3 class="text-xl font-bold mb-2">{{ $blog['title'] }}</h3>
-                    <p class="text-gray-700 text-sm mb-4">{{ $blog['excerpt'] }}</p>
-                    <a href="{{ $blog['link'] }}" class="text-web-secondary font-bold hover:underline">Read More</a>
-                    <p class="text-xs text-gray-500 mt-2">{{ $blog['date'] }}</p>
+                    <p class="text-gray-700 text-sm mb-4">{{ $blog['description'] }}</p>
+                    <a href="{{ route('blogs.blog', [$blog['id'], $blog['slug']]) }}" class="text-web-secondary font-bold hover:underline">Read More</a>
+                    <p class="text-xs text-gray-500 mt-2">{{ $blog['created_at'] }}</p>
                 </div>
             @endforeach
         </div>

@@ -1,7 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
-import { HomeIcon, ChevronDownIcon, DocumentTextIcon } from "@heroicons/vue/16/solid/index.js";
+import {
+    HomeIcon,
+    ChevronDownIcon,
+    DocumentTextIcon,
+    WrenchScrewdriverIcon,
+} from "@heroicons/vue/16/solid/index.js";
 
 const activeMenu = ref(null);
 
@@ -69,6 +74,37 @@ const toggleMenu = (menuId) => {
                             class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
                         >
                             Create Blog
+                        </Link>
+                    </div>
+                </li>
+
+                <!-- Services Menu -->
+                <li class="nav-item">
+                    <button
+                        @click="toggleMenu('services')"
+                        class="flex items-center justify-between w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <div class="flex items-center">
+                            <WrenchScrewdriverIcon class="w-5 h-5 mr-2" />
+                            Services
+                        </div>
+                        <ChevronDownIcon
+                            class="w-5 h-5 transition-transform"
+                            :class="{ 'rotate-180': activeMenu === 'services' }"
+                        />
+                    </button>
+                    <div v-show="activeMenu === 'services'" class="menu-dropdown pl-8 mt-2 space-y-1">
+                        <Link
+                            :href="route('admin.services.index')"
+                            class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
+                        >
+                            Services List
+                        </Link>
+                        <Link
+                            :href="route('admin.services.create')"
+                            class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
+                        >
+                            Create Service
                         </Link>
                     </div>
                 </li>

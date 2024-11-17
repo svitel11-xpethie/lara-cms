@@ -15,4 +15,8 @@ Route::middleware([
     Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)
         ->except(['update']); // Exclude default update route
     Route::post('blogs/{blog}', [\App\Http\Controllers\Admin\BlogController::class, 'update'])->name('blogs.update');
+
+    Route::resource('services', \App\Http\Controllers\Admin\ServicesController::class)
+        ->except(['update']); // Exclude default update route
+    Route::post('services/{service}', [\App\Http\Controllers\Admin\ServicesController::class, 'update'])->name('services.update');
 });

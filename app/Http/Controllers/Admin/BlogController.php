@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
-use Intervention\Image\Laravel\Facades\Image; // Correct Facade Import
+use App\Services\Upload;
 use Illuminate\Support\Str;
 
 class BlogController extends Controller
@@ -28,8 +28,8 @@ class BlogController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data['image'] = $this->handleImageUpload($image, 'blogs/full');
-            $data['image_thumb'] = $this->handleImageUpload($image, 'blogs/thumbs', 300);
+            $data['image'] = Upload::handleImageUpload(image:$image, path:'blogs/full', convertTo: 'webp');
+            $data['image_thumb'] = Upload::handleImageUpload(image:$image, path: 'blogs/thumbs', convertTo: 'webp', resizeWidth: 300);
         }
 
         Blog::create($data);
@@ -47,8 +47,8 @@ class BlogController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data['image'] = $this->handleImageUpload($image, 'blogs/full');
-            $data['image_thumb'] = $this->handleImageUpload($image, 'blogs/thumbs', 300);
+            $data['image'] = Upload::handleImageUpload(image:$image, path:'blogs/full', convertTo: 'webp');
+            $data['image_thumb'] = Upload::handleImageUpload(image:$image, path: 'blogs/thumbs', convertTo: 'webp', resizeWidth: 300);
 
             // Delete old images if they exist
             if ($blog->image && file_exists(public_path($blog->image))) {
@@ -68,34 +68,10 @@ class BlogController extends Controller
     {
         $blog->delete();
         //return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted successfully!');
-        return response()->json(['message' => 'Blog deleted successfully']);
     }
 
-    private function handleImageUpload($image, $path, $resizeWidth = null)
-    {
-        // Generate a unique filename
-        $filename = time() . '_' . Str::random(10) . '.webp';
-        $destination = public_path(self::IMAGES_PATH . $path);
 
-        // Ensure directory exists
-        if (!is_dir($destination)) {
-            mkdir($destination, 0755, true);
-        }
-
-        // Process and save image
-        $imageInstance = Image::read($image->getRealPath());
-        $imageInstance->toWebp();
-
-        if ($resizeWidth) {
-            $imageInstance->scale($resizeWidth, null);
-        }
-
-        $imageInstance->save($destination . '/' . $filename, 80); // Save with compression
-
-        return self::IMAGES_PATH . $path . '/' . $filename;
-    }
-
-    public function generateMetaFromContent($content)
+    /*public function generateMetaFromContent($content)
     {
         // Extract meta description
         $metaDescription = substr(strip_tags($content), 0, 150) . '...';
@@ -110,5 +86,5 @@ class BlogController extends Controller
             'seo_description' => $metaDescription,
             'keywords' => $keywords,
         ];
-    }
+    }*/
 }
