@@ -38,6 +38,7 @@ const form = useForm({
     alt: props.gallery.alt,
     image: null,
     image_thumb: props.gallery.image_thumb,
+    update: true,
 });
 
 const submit = () => {
@@ -46,12 +47,7 @@ const submit = () => {
         formData.append(key, form.data()[key]);
     }
 
-    axios.put(route('admin.galleries.update', props.gallery.id), formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-            'X-HTTP-Method-Override': 'PUT', // Laravel expects PUT
-        },
-    })
+    axios.post(route('admin.galleries.update', props.gallery.id), formData)
         .then(response => {
             toast.success('Image updated successfully');
         })

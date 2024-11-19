@@ -141,6 +141,9 @@ class GalleryController extends Controller
             list($width, $height) = getimagesize(public_path($data['image']));
             $data['width'] = $width;
             $data['height'] = $height;
+        } else {
+            unset($data['image']);
+            unset($data['image_thumb']);
         }
 
         $gallery->update($data);

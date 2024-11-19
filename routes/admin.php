@@ -26,9 +26,10 @@ Route::middleware([
 
 
     // GALLERIES
-    Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['show']);
+    Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['show', 'update']);
     Route::get('galleries/images', [\App\Http\Controllers\Admin\GalleryController::class, 'images'])->name('galleries.images');
     Route::post('galleries/update-order', [\App\Http\Controllers\Admin\GalleryController::class, 'updateOrder'])->name('galleries.updateOrder');
+    Route::post('galleries/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'update'])->name('galleries.update');
 
 
     // CLOUD
