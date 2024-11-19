@@ -12,13 +12,24 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+
+    // BLOGS
     Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)
         ->except(['update']); // Exclude default update route
     Route::post('blogs/{blog}', [\App\Http\Controllers\Admin\BlogController::class, 'update'])->name('blogs.update');
 
+
+    // SERVICES
     Route::resource('services', \App\Http\Controllers\Admin\ServicesController::class)
         ->except(['update']); // Exclude default update route
     Route::post('services/{service}', [\App\Http\Controllers\Admin\ServicesController::class, 'update'])->name('services.update');
+
+
+    // GALLERIES
+    Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['show']);
+    Route::get('galleries/images', [\App\Http\Controllers\Admin\GalleryController::class, 'images'])->name('galleries.images');
+    Route::post('galleries/update-order', [\App\Http\Controllers\Admin\GalleryController::class, 'updateOrder'])->name('galleries.updateOrder');
+
 
     // CLOUD
     Route::post('/cloud/upload', [\App\Http\Controllers\Admin\CloudController::class, 'upload'])->name('cloud.upload');

@@ -4,12 +4,12 @@
             <a
                 v-for="(item, index) in galleryItems"
                 :key="item.id"
-                :href="item.src"
+                :href="item.image"
                 :data-pswp-width="item.width"
                 :data-pswp-height="item.height"
                 @click.prevent="openGallery(index)"
             >
-                <img :src="item.thumb" alt="Gallery Image" class="rounded" />
+                <img :src="item.image_thumb" alt="Gallery Image" class="rounded" />
             </a>
         </div>
         <p v-else>No Images Found</p>

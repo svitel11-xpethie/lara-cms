@@ -38,7 +38,6 @@ function onFileChange(e) {
 function storeData() {
     store.dispatch('startLoading')
     let formData = new FormData();
-    console.log(image.value);
     if (image.value instanceof File)
         formData.append('image', image.value);
 
