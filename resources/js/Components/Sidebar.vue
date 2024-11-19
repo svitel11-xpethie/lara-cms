@@ -6,6 +6,7 @@ import {
     ChevronDownIcon,
     DocumentTextIcon,
     WrenchScrewdriverIcon,
+    CloudArrowUpIcon
 } from "@heroicons/vue/16/solid/index.js";
 
 const activeMenu = ref(null);
@@ -107,6 +108,18 @@ const toggleMenu = (menuId) => {
                             Create Service
                         </Link>
                     </div>
+                </li>
+
+                <!-- Cloud Menu -->
+                <!-- Services Menu -->
+                <li class="nav-item">
+                    <Link
+                        :href="route('admin.cloud.index')"
+                        class="flex items-center w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <CloudArrowUpIcon class="w-5 h-5 mr-2" />
+                        Cloud
+                    </Link>
                 </li>
             </ul>
         </nav>

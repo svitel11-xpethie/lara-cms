@@ -17,7 +17,8 @@ class Upload
         $path,
         $convertTo = null,
         $quality = 80,
-        $resizeWidth = null
+        $resizeWidth = null,
+        $resizeHeight = null,
     )
     {
         // Get the file extension
@@ -54,8 +55,12 @@ class Upload
             // Save original format for svg, ico, and png
             $imageInstance->save($destination . '/' . $filename);
         } else {
+            // image is landscape
+            $is_landscape = $imageInstance->width() > $imageInstance->height();
 
-            if ($resizeWidth) {
+            if ($is_landscape && $resizeHeight) {
+                $imageInstance->scale(null, $resizeHeight);
+            } else if ($resizeWidth) {
                 $imageInstance->scale($resizeWidth, null);
             }
 

@@ -19,4 +19,10 @@ Route::middleware([
     Route::resource('services', \App\Http\Controllers\Admin\ServicesController::class)
         ->except(['update']); // Exclude default update route
     Route::post('services/{service}', [\App\Http\Controllers\Admin\ServicesController::class, 'update'])->name('services.update');
+
+    // CLOUD
+    Route::post('/cloud/upload', [\App\Http\Controllers\Admin\CloudController::class, 'upload'])->name('cloud.upload');
+    Route::delete('/cloud/delete/{id}', [\App\Http\Controllers\Admin\CloudController::class, 'delete'])->name('cloud.delete');
+    Route::get('/cloud/images', [\App\Http\Controllers\Admin\CloudController::class, 'images'])->name('cloud.images');
+    Route::get('/cloud', [\App\Http\Controllers\Admin\CloudController::class, 'index'])->name('cloud.index');
 });
