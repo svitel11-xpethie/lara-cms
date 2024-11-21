@@ -46,14 +46,14 @@ Route::middleware([
 
         Route::get('team', [CompanyController::class, 'team'])->name('team');
         Route::get('team/members', [CompanyController::class, 'teamMembers'])->name('team.members');
-
         Route::post('team', [CompanyController::class, 'storeMember'])->name('team.store');
         Route::post('team/{member}', [CompanyController::class, 'storeMember'])->name('team.update');
         Route::delete('team/{member}', [CompanyController::class, 'deleteMember'])->name('team.delete');
 
         Route::get('social', [CompanyController::class, 'social'])->name('social');
+        Route::get('social/profiles', [CompanyController::class, 'socialProfiles'])->name('social.profiles');
         Route::post('social', [CompanyController::class, 'storeSocial'])->name('social.store');
-        Route::put('social/{social}', [CompanyController::class, 'updateSocial'])->name('social.update');
+        Route::post('social/{social}', [CompanyController::class, 'storeSocial'])->name('social.update');
         Route::delete('social/{social}', [CompanyController::class, 'deleteSocial'])->name('social.delete');
 
         Route::get('meta', [CompanyController::class, 'meta'])->name('meta');

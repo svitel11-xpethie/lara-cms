@@ -11,19 +11,50 @@
             </form>
 
             <!-- Members List -->
-            <div class="flex flex-wrap mt-6">
-                <div v-for="member in members" :key="member.id"
-                     class="border p-4 rounded bg-white shadow md:w-[350px] xs:w-full">
-                    <img :src="member.photo" alt="Photo" class="w-24 h-24 object-cover rounded-full mx-auto" />
-                    <h3 class="text-lg font-bold text-center">{{ member.name }}</h3>
-                    <p class="text-sm text-gray-600 text-center">{{ member.role }}</p>
-                    <p class="text-sm mt-2">{{ member.description }}</p>
-                    <hr class="my-4">
-                    <div class="flex justify-center space-x-4 mt-4">
-                        <Button variant="secondary" @click="editMember(member)">Edit</Button>
-                        <Button variant="danger" @click="deleteMember(member.id)">Delete</Button>
-                    </div>
-                </div>
+            <div class="overflow-x-auto mt-6">
+                <table class="min-w-full bg-white border rounded-lg shadow-md">
+                    <thead>
+                    <tr>
+                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Photo</th>
+                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Name</th>
+                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Role</th>
+                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Description</th>
+                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="member in members" :key="member.id" class="hover:bg-gray-50">
+                        <td class="py-4 px-4">
+                            <img
+                                :src="member.photo"
+                                alt="Photo"
+                                class="w-16 h-16 object-cover rounded-full mx-auto"
+                            />
+                        </td>
+                        <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ member.name }}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600">{{ member.role }}</td>
+                        <td class="py-4 px-4 text-sm text-gray-600">{{ member.description }}</td>
+                        <td class="py-4 px-4">
+                            <div class="flex items-center space-x-2">
+                                <Button
+                                    variant="secondary"
+                                    class="px-4 py-2 text-sm"
+                                    @click="editMember(member)"
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                    variant="danger"
+                                    class="px-4 py-2 text-sm"
+                                    @click="deleteMember(member.id)"
+                                >
+                                    Delete
+                                </Button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </AppLayout>

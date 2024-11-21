@@ -9,5 +9,5 @@ class CompanySocial extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_id', 'platform', 'url'];
+    protected $guarded = [];
 }

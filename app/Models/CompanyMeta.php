@@ -9,5 +9,5 @@ class CompanyMeta extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_id', 'key', 'value'];
+    protected $guarded = [];
 }

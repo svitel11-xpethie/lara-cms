@@ -32,7 +32,7 @@ const saveCompany = async () => {
 
 <template>
     <AppLayout title="Company Profile">
-        <form @submit.prevent="saveCompany" class="space-y-6">
+        <form @submit.prevent="saveCompany" class="space-y-6 p-8 bg-white shadow">
             <!-- Company Details -->
             <TextInput v-model="company.name" label="Company Name" placeholder="Enter company name"/>
             <TextInput v-model="company.ceo" label="CEO" placeholder="Enter CEO name"/>

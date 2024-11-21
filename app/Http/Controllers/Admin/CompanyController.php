@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -156,27 +157,47 @@ class CompanyController extends Controller
         return inertia('Company/Social', ['socials' => $socials]);
     }
 
+    public function socialProfiles()
+    {
+        return response()->json(CompanySocial::orderBy('id')->get());
+    }
+
     public function storeSocial(Request $request)
     {
         $validated = $request->validate([
+            'id' => 'nullable|exists:company_socials,id', // For updates
             'platform' => 'required|string|max:255',
-            'link' => 'nullable|url|max:255',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
+            'url' => 'required|url|max:255',
+            'icon' => $request->hasFile('icon')
+                ? 'file|image|mimes:jpeg,png,jpg,svg,webp|max:2048'
+                : 'nullable',
         ]);
 
+        // Handle icon upload
         if ($request->hasFile('icon')) {
             $validated['icon'] = UploadService::handleImageUpload(
                 image: $request->file('icon'),
                 path: 'companies/socials',
-                convertTo: 'webp',
-                resizeWidth: 50,
-                resizeHeight: 50
+                resizeWidth: 100,
+                resizeHeight: 100
             );
+        } else {
+            unset($validated['icon']);
         }
 
-        CompanySocial::create($validated);
 
-        return redirect()->back()->with('success', 'Social profile added successfully!');
+        // Check if it's an update or create request
+        if (!empty($validated['id'])) {
+            $social = CompanySocial::findOrFail($validated['id']);
+            $social->update($validated);
+            $message = 'Social link updated successfully!';
+        } else {
+            $validated['company_id'] = Company::first()->id;
+            CompanySocial::create($validated);
+            $message = 'Social link added successfully!';
+        }
+
+        return response()->json(['message' => $message]);
     }
 
 
