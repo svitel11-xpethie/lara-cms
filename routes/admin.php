@@ -45,8 +45,10 @@ Route::middleware([
         Route::post('profile/update', [CompanyController::class, 'updateProfile'])->name('updateProfile');
 
         Route::get('team', [CompanyController::class, 'team'])->name('team');
+        Route::get('team/members', [CompanyController::class, 'teamMembers'])->name('team.members');
+
         Route::post('team', [CompanyController::class, 'storeMember'])->name('team.store');
-        Route::put('team/{member}', [CompanyController::class, 'updateMember'])->name('team.update');
+        Route::post('team/{member}', [CompanyController::class, 'storeMember'])->name('team.update');
         Route::delete('team/{member}', [CompanyController::class, 'deleteMember'])->name('team.delete');
 
         Route::get('social', [CompanyController::class, 'social'])->name('social');
