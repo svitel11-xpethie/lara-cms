@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GalleryRequest;
 use App\Http\Resources\GalleryCollection;
 use App\Models\Gallery;
-use App\Services\Upload;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -41,21 +41,21 @@ class GalleryController extends Controller
             $image = $request->file('image');
 
             // Handle Image Upload
-            $data['image'] = Upload::handleImageUpload(
+            $data['image'] = UploadService::handleImageUpload(
                 image: $image,
                 path: 'galleries/full',
                 convertTo: 'webp',
                 resizeWidth: 1500,
                 resizeHeight: 1500,
             );
-            $data['image_thumb'] = Upload::handleImageUpload(
+            $data['image_thumb'] = UploadService::handleImageUpload(
                 image: $image,
                 path: 'galleries/thumb',
                 convertTo: 'webp',
                 resizeWidth: 300,
                 resizeHeight: 300,
             );
-            $data['orientation'] = \App\Services\Image::getOrientation($image);
+            $data['orientation'] = \App\Services\ImageService::getOrientation($image);
 
             // add height and width to the data
             list($width, $height) = getimagesize(public_path($data['image']));
@@ -121,21 +121,21 @@ class GalleryController extends Controller
                 unlink(public_path($gallery->image_thumb));
             }
 
-            $data['image'] = Upload::handleImageUpload(
+            $data['image'] = UploadService::handleImageUpload(
                 image: $image,
                 path: 'galleries/full',
                 convertTo: 'webp',
                 resizeWidth: 1500,
                 resizeHeight: 1500,
             );
-            $data['image_thumb'] = Upload::handleImageUpload(
+            $data['image_thumb'] = UploadService::handleImageUpload(
                 image: $image,
                 path: 'galleries/thumb',
                 convertTo: 'webp',
                 resizeWidth: 300,
                 resizeHeight: 300,
             );
-            $data['orientation'] = \App\Services\Image::getOrientation($image);
+            $data['orientation'] = \App\Services\ImageService::getOrientation($image);
 
             // add height and width to the data
             list($width, $height) = getimagesize(public_path($data['image']));

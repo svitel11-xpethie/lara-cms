@@ -8,7 +8,7 @@ use Intervention\Image\Laravel\Facades\Image;
 // Correct Facade Import
 use Illuminate\Support\Str;
 
-class Upload
+class UploadService
 {
     const IMAGES_PATH = '/assets/images/';
 

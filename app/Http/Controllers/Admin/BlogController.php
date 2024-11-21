@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
-use App\Services\Upload;
+use App\Services\UploadService;
 use Illuminate\Support\Str;
 
 class BlogController extends Controller
@@ -28,8 +28,8 @@ class BlogController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data['image'] = Upload::handleImageUpload(image:$image, path:'blogs/full', convertTo: 'webp');
-            $data['image_thumb'] = Upload::handleImageUpload(image:$image, path: 'blogs/thumbs', convertTo: 'webp', resizeWidth: 300);
+            $data['image'] = UploadService::handleImageUpload(image:$image, path:'blogs/full', convertTo: 'webp');
+            $data['image_thumb'] = UploadService::handleImageUpload(image:$image, path: 'blogs/thumbs', convertTo: 'webp', resizeWidth: 300);
         }
 
         Blog::create($data);
@@ -47,8 +47,8 @@ class BlogController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data['image'] = Upload::handleImageUpload(image:$image, path:'blogs/full', convertTo: 'webp');
-            $data['image_thumb'] = Upload::handleImageUpload(image:$image, path: 'blogs/thumbs', convertTo: 'webp', resizeWidth: 300);
+            $data['image'] = UploadService::handleImageUpload(image:$image, path:'blogs/full', convertTo: 'webp');
+            $data['image_thumb'] = UploadService::handleImageUpload(image:$image, path: 'blogs/thumbs', convertTo: 'webp', resizeWidth: 300);
 
             // Delete old images if they exist
             if ($blog->image && file_exists(public_path($blog->image))) {

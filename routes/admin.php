@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CloudController;
+use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\ServicesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,29 +17,44 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-
     // BLOGS
-    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)
+    Route::resource('blogs', BlogController::class)
         ->except(['update']); // Exclude default update route
-    Route::post('blogs/{blog}', [\App\Http\Controllers\Admin\BlogController::class, 'update'])->name('blogs.update');
-
+    Route::post('blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
 
     // SERVICES
-    Route::resource('services', \App\Http\Controllers\Admin\ServicesController::class)
+    Route::resource('services', ServicesController::class)
         ->except(['update']); // Exclude default update route
-    Route::post('services/{service}', [\App\Http\Controllers\Admin\ServicesController::class, 'update'])->name('services.update');
-
+    Route::post('services/{service}', [ServicesController::class, 'update'])->name('services.update');
 
     // GALLERIES
-    Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['show', 'update']);
-    Route::get('galleries/images', [\App\Http\Controllers\Admin\GalleryController::class, 'images'])->name('galleries.images');
-    Route::post('galleries/update-order', [\App\Http\Controllers\Admin\GalleryController::class, 'updateOrder'])->name('galleries.updateOrder');
-    Route::post('galleries/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'update'])->name('galleries.update');
-
+    Route::resource('galleries', GalleryController::class)->except(['show', 'update']);
+    Route::get('galleries/images', [GalleryController::class, 'images'])->name('galleries.images');
+    Route::post('galleries/update-order', [GalleryController::class, 'updateOrder'])->name('galleries.updateOrder');
+    Route::post('galleries/{gallery}', [GalleryController::class, 'update'])->name('galleries.update');
 
     // CLOUD
-    Route::post('/cloud/upload', [\App\Http\Controllers\Admin\CloudController::class, 'upload'])->name('cloud.upload');
-    Route::delete('/cloud/delete/{id}', [\App\Http\Controllers\Admin\CloudController::class, 'delete'])->name('cloud.delete');
-    Route::get('/cloud/images', [\App\Http\Controllers\Admin\CloudController::class, 'images'])->name('cloud.images');
-    Route::get('/cloud', [\App\Http\Controllers\Admin\CloudController::class, 'index'])->name('cloud.index');
+    Route::post('/cloud/upload', [CloudController::class, 'upload'])->name('cloud.upload');
+    Route::delete('/cloud/delete/{id}', [CloudController::class, 'delete'])->name('cloud.delete');
+    Route::get('/cloud/images', [CloudController::class, 'images'])->name('cloud.images');
+    Route::get('/cloud', [CloudController::class, 'index'])->name('cloud.index');
+
+    // COMPANY
+    Route::prefix('company')->name('company.')->group(function () {
+        Route::get('profile', [CompanyController::class, 'profile'])->name('profile');
+        Route::post('profile/update', [CompanyController::class, 'updateProfile'])->name('updateProfile');
+
+        Route::get('team', [CompanyController::class, 'team'])->name('team');
+        Route::post('team', [CompanyController::class, 'storeMember'])->name('team.store');
+        Route::put('team/{member}', [CompanyController::class, 'updateMember'])->name('team.update');
+        Route::delete('team/{member}', [CompanyController::class, 'deleteMember'])->name('team.delete');
+
+        Route::get('social', [CompanyController::class, 'social'])->name('social');
+        Route::post('social', [CompanyController::class, 'storeSocial'])->name('social.store');
+        Route::put('social/{social}', [CompanyController::class, 'updateSocial'])->name('social.update');
+        Route::delete('social/{social}', [CompanyController::class, 'deleteSocial'])->name('social.delete');
+
+        Route::get('meta', [CompanyController::class, 'meta'])->name('meta');
+        Route::put('meta', [CompanyController::class, 'updateMeta'])->name('meta.update');
+    });
 });

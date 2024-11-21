@@ -5,7 +5,7 @@ namespace App\Services;
 use Intervention\Image\Laravel\Facades\Image as ImageIntervention;
 
 
-class Image
+class ImageService
 {
     public static function getOrientation($image)
     {

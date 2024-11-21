@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CloudResource;
 use App\Models\Cloud;
-use App\Services\Image;
-use App\Services\Upload;
+use App\Services\ImageService;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 
 class CloudController extends Controller
@@ -20,7 +20,7 @@ class CloudController extends Controller
     {
         try {
             // upload full image
-            $image_full = Upload::handleImageUpload(
+            $image_full = UploadService::handleImageUpload(
                 image: $request->file('image'),
                 path: 'cloud/full',
                 convertTo: 'webp',
@@ -29,7 +29,7 @@ class CloudController extends Controller
             );
 
             // upload thumbnail
-            $image_thumb = Upload::handleImageUpload(
+            $image_thumb = UploadService::handleImageUpload(
                 image: $request->file('image'),
                 path: 'cloud/thumbs',
                 convertTo: 'webp',
@@ -43,7 +43,7 @@ class CloudController extends Controller
                 'image_thumb' => $image_thumb,
                 'type' => 'webp',
                 'size' => $request->file('image')->getSize(),
-                'orientation' => Image::getOrientation($request->file('image'))
+                'orientation' => ImageService::getOrientation($request->file('image'))
             ]);
 
             return new CloudResource($file);

@@ -7,7 +7,9 @@ import {
     DocumentTextIcon,
     WrenchScrewdriverIcon,
     CloudArrowUpIcon,
-    PhotoIcon
+    PhotoIcon,
+    HomeModernIcon,
+    UserGroupIcon
 } from "@heroicons/vue/16/solid/index.js";
 
 const activeMenu = ref(null);
@@ -153,6 +155,48 @@ const toggleMenu = (menuId) => {
                     </div>
                 </li>
 
+                <!-- Gallery Menu -->
+                <li class="nav-item">
+                    <button
+                        @click="toggleMenu('company')"
+                        class="flex items-center justify-between w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <div class="flex items-center">
+                            <HomeModernIcon class="w-5 h-5 mr-2" />
+                            Company
+                        </div>
+                        <ChevronDownIcon
+                            class="w-5 h-5 transition-transform"
+                            :class="{ 'rotate-180': activeMenu === 'company' }"
+                        />
+                    </button>
+                    <div v-show="activeMenu === 'company'" class="menu-dropdown pl-8 mt-2 space-y-1">
+                        <Link
+                            :href="route('admin.company.profile')"
+                            class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
+                        >
+                            Profile
+                        </Link>
+                        <Link
+                            :href="route('admin.company.team')"
+                            class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
+                        >
+                            Team
+                        </Link>
+                        <Link
+                            :href="route('admin.company.social')"
+                            class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
+                        >
+                            Social
+                        </Link>
+                        <Link
+                            :href="route('admin.company.meta')"
+                            class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
+                        >
+                            SEO
+                        </Link>
+                    </div>
+                </li>
             </ul>
         </nav>
     </aside>

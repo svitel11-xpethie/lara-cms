@@ -65,6 +65,19 @@
 
             <!-- Table -->
             <button @click.prevent="insertTable" class="p-1 bg-white h-8 w-8 border rounded flex items-center justify-center"><TableCellsIcon class="w-5 h-5" /></button>
+
+            <!-- Placeholder Dropdown -->
+            <select
+                v-if="availablePlaceholders.length"
+                @change="insertPlaceholder($event.target.value)"
+                class="p-1 bg-white h-8 w-[130px] border rounded flex items-center"
+            >
+                <option value="" disabled selected>Select Placeholder</option>
+                <option v-for="placeholder in availablePlaceholders" :key="placeholder" :value="placeholder">
+                    {{ placeholder }}
+                </option>
+            </select>
+
         </div>
 
         <!-- Editor Content -->
@@ -102,6 +115,10 @@ const props = defineProps({
     modelValue: {
         type: String,
         required: true,
+    },
+    availablePlaceholders: {
+        type: Array,
+        default: () => [],
     },
 });
 
@@ -224,6 +241,10 @@ const toggleOrderedList = () => editor.value.chain().focus().toggleOrderedList()
 const insertTable = () => editor.value.chain().focus().insertTable({rows: 3, cols: 3}).run();
 const setFontSize = (size) => editor.value.chain().focus().setFontSize(size).run();
 
+const insertPlaceholder = (placeholder) => {
+    editor.value.chain().focus().insertContent(placeholder).run();
+};
+
 // Active state refs
 const isBoldActive = ref(false);
 const isItalicActive = ref(false);
@@ -264,6 +285,15 @@ const watchEditorActiveStates = () => {
 }
 
 .tiptap {
+    img {
+        max-width: 80%;
+        margin: auto;
+        border: 1px solid #ddd;
+        padding: 3px;
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
     :first-child {
         margin-top: 0;
     }

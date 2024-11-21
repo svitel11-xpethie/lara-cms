@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ServiceRequest;
 use App\Models\Service;
-use App\Services\Upload;
+use App\Services\UploadService;
 use Illuminate\Support\Str;
 
 class ServicesController extends Controller
@@ -28,8 +28,8 @@ class ServicesController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data['image'] = Upload::handleImageUpload(image:$image, path:'services/full', convertTo: 'webp');
-            $data['image_thumb'] = Upload::handleImageUpload(image:$image, path: 'services/thumbs', convertTo: 'webp', resizeWidth: 300);
+            $data['image'] = UploadService::handleImageUpload(image:$image, path:'services/full', convertTo: 'webp');
+            $data['image_thumb'] = UploadService::handleImageUpload(image:$image, path: 'services/thumbs', convertTo: 'webp', resizeWidth: 300);
         }
 
         Service::create($data);
@@ -47,8 +47,8 @@ class ServicesController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $data['image'] = Upload::handleImageUpload(image:$image, path:'services/full', convertTo: 'webp');
-            $data['image_thumb'] = Upload::handleImageUpload(image:$image, path: 'services/thumbs', convertTo: 'webp', resizeWidth: 300);
+            $data['image'] = UploadService::handleImageUpload(image:$image, path:'services/full', convertTo: 'webp');
+            $data['image_thumb'] = UploadService::handleImageUpload(image:$image, path: 'services/thumbs', convertTo: 'webp', resizeWidth: 300);
 
             // Delete old images if they exist
             if ($service->image && file_exists(public_path($service->image))) {

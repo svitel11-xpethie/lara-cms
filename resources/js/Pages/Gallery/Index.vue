@@ -13,7 +13,7 @@
                         <img
                             :src="element.image_thumb"
                             alt="Image"
-                            class="w-full h-40 object-cover cursor-pointer"
+                            class="w-full h-80 object-cover cursor-pointer"
                         />
                         <div class="absolute bg-admin-primary bg-opacity-60 rounded px-2 py-1 flex items-center top-0 right-0 m-1">
                             <button
