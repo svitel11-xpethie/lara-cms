@@ -48,7 +48,8 @@ Route::middleware([
         Route::post('profile/update', [CompanyController::class, 'updateProfile'])->name('updateProfile');
 
         Route::resource('team', CompanyTeamController::class)->except(['show', 'create', 'edit', 'update']);
-        Route::post('team/{team}', [CompanyTeamController::class, 'update'])->name('team.update');
+        Route::post('team/update/order', [CompanyTeamController::class, 'updateOrder'])->name('team.updateOrder');
+        Route::post('team/{member}', [CompanyTeamController::class, 'update'])->name('team.update');
         Route::get('team/members', [CompanyTeamController::class, 'members'])->name('team.members');
 
         Route::resource('social', CompanySocialController::class)->except(['show', 'create', 'edit', 'update']);

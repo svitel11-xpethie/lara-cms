@@ -1,6 +1,6 @@
 <template>
     <AppLayout title="Team">
-        <div>
+        <div class="space-y-4">
             <!-- Add/Update Member Form -->
             <form @submit.prevent="submitMember" class="space-y-4 p-8 bg-white shadow-md">
                 <div class="flex xs:flex-wrap sm:space-x-4">
@@ -13,50 +13,43 @@
                 <Button type="submit">{{ editingMemberId ? 'Update Member' : 'Add Member' }}</Button>
             </form>
 
-            <!-- Members List -->
-            <div class="overflow-x-auto mt-6">
-                <table class="min-w-full bg-white border rounded-lg shadow-md">
-                    <thead>
-                    <tr class="bg-gray-200 text-left">
-                        <th class="p-4">Photo</th>
-                        <th class="p-4">Name</th>
-                        <th class="p-4">Role</th>
-                        <th class="p-4">Description</th>
-                        <th class="p-4 text-right pr-12">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(member, idx) in members" :key="idx" class="border-b border-gray-100">
-                        <td class="py-4 px-4">
+            <!-- Members List with Drag-and-Drop -->
+            <draggable
+                v-model="members"
+                @end="updateOrder"
+                item-key="id"
+                class="space-y-2"
+            >
+                <template #item="{ element }">
+                    <div class="flex items-center justify-between bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-center space-x-4">
                             <img
-                                :src="member.photo"
+                                :src="element.photo"
                                 alt="Photo"
-                                class="w-16 h-16 object-cover rounded-full mx-auto"
+                                class="w-16 h-16 object-cover rounded-full"
                             />
-                        </td>
-                        <td class="p-4">{{ member.name }}</td>
-                        <td class="p-4">{{ member.role }}</td>
-                        <td class="p-4">{{ member.description }}</td>
-                        <td class="p-4">
-                            <div class="flex items-center justify-end pr-4 space-x-2">
-                                <button @click.prevent="editMember(member)"
-                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
-                                    <PencilSquareIcon class="w-5 h-4 mr-1"/>
-                                    Edit
-                                </button>
-
-                                <button
-                                    @click.prevent="deleteMember(member.id)"
-                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
-                                    <TrashIcon class="w-5 h-4 mr-1"/>
-                                    Delete
-                                </button>
+                            <div>
+                                <p class="font-semibold">{{ element.name }}</p>
+                                <p class="text-gray-600 text-sm">{{ element.role }}</p>
                             </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button @click="editMember(element)"
+                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
+                                <PencilSquareIcon class="w-5 h-4 mr-1"/>
+                                Edit
+                            </button>
+
+                            <button
+                                @click="deleteMember(element.id)"
+                                class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
+                                <TrashIcon class="w-5 h-4 mr-1"/>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </draggable>
         </div>
     </AppLayout>
 </template>
@@ -75,6 +68,7 @@ import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/solid/index.js";
 
 const store = useStore();
 const toast = useToast();
+import Draggable from 'vuedraggable';
 
 const members = ref([]);
 const editingMemberId = ref(null);
@@ -111,6 +105,8 @@ const submitMember = async () => {
             axios.post(route('admin.company.team.update', editingMemberId.value), formData).then((response) => {
                 const index = members.value.findIndex((m) => m.id === editingMemberId.value);
                 members.value[index] = {...members.value[index], ...response.data.member};
+                fetchMembers();
+
                 toast.success("Member updated successfully!");
             });
         } else {
@@ -125,7 +121,7 @@ const submitMember = async () => {
         toast.error("Failed to submit member.");
     } finally {
         editingMemberId.value = null;
-        form.value = {name: '', role: '', description: '', photo: null};
+        resetForm();
         await store.dispatch('stopLoading');
     }
 };
@@ -160,6 +156,17 @@ const editMember = (member) => {
 const resetForm = () => {
     editingMemberId.value = null;
     form.value = {name: '', role: '', description: '', photo: null};
+};
+
+const updateOrder = async () => {
+    try {
+        const order = members.value.map((member, index) => ({ id: member.id, order: index }));
+        await axios.post(route('admin.company.team.updateOrder'), { order });
+        toast.success('Order updated successfully!');
+    } catch (error) {
+        toast.error('Failed to update order.');
+        console.error(error);
+    }
 };
 
 onMounted(fetchMembers);

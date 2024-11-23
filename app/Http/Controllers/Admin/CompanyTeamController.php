@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MemberRequest;
 use App\Http\Resources\MemberResource;
-use App\Models\Company;
 use App\Models\CompanyMember;
 use App\Services\UploadService;
 use Illuminate\Http\Request;
@@ -58,7 +57,6 @@ class CompanyTeamController extends Controller
     {
         try {
             $data = $request->validated();
-
             // Handle photo upload
             if ($request->hasFile('photo')) {
                 // Delete old photo
@@ -73,6 +71,8 @@ class CompanyTeamController extends Controller
                     resizeWidth: 500,
                     resizeHeight: 500
                 );
+            } else {
+                unset($data['photo']);
             }
 
             $member->update($data);
@@ -98,4 +98,20 @@ class CompanyTeamController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
+
+    public function updateOrder(Request $request)
+    {
+        try {
+            $orders = $request->input('order');
+            foreach ($orders as $order) {
+                CompanyMember::where('id', $order['id'])->update(['order' => $order['order']]);
+            }
+
+            return response()->json(['message' => 'Order updated successfully!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
 }
