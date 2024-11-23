@@ -3,8 +3,11 @@
         <div>
             <!-- Add/Update Member Form -->
             <form @submit.prevent="submitMember" class="space-y-4 p-8 bg-white shadow-md">
-                <TextInput v-model="form.name" label="Member Name" />
-                <TextInput v-model="form.role" label="Role" />
+                <div class="flex xs:flex-wrap sm:space-x-4">
+                    <TextInput class="w-1/2 xs:w-full" v-model="form.name" label="Member Name" />
+                    <TextInput class="w-1/2 xs:w-full" v-model="form.role" label="Role" />
+                </div>
+
                 <Textarea v-model="form.description" label="Description" />
                 <FileUpload v-model="form.photo" label="Photo" />
                 <Button type="submit">{{ editingMemberId ? 'Update Member' : 'Add Member' }}</Button>
@@ -14,16 +17,16 @@
             <div class="overflow-x-auto mt-6">
                 <table class="min-w-full bg-white border rounded-lg shadow-md">
                     <thead>
-                    <tr>
-                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Photo</th>
-                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Name</th>
-                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Role</th>
-                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Description</th>
-                        <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Actions</th>
+                    <tr class="bg-gray-200 text-left">
+                        <th class="p-4">Photo</th>
+                        <th class="p-4">Name</th>
+                        <th class="p-4">Role</th>
+                        <th class="p-4">Description</th>
+                        <th class="p-4 text-right pr-12">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="member in members" :key="member.id" class="hover:bg-gray-50">
+                    <tr v-for="(member, idx) in members" :key="idx" class="border-b border-gray-100">
                         <td class="py-4 px-4">
                             <img
                                 :src="member.photo"
@@ -31,25 +34,23 @@
                                 class="w-16 h-16 object-cover rounded-full mx-auto"
                             />
                         </td>
-                        <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ member.name }}</td>
-                        <td class="py-4 px-4 text-sm text-gray-600">{{ member.role }}</td>
-                        <td class="py-4 px-4 text-sm text-gray-600">{{ member.description }}</td>
-                        <td class="py-4 px-4">
-                            <div class="flex items-center space-x-2">
-                                <Button
-                                    variant="secondary"
-                                    class="px-4 py-2 text-sm"
-                                    @click="editMember(member)"
-                                >
+                        <td class="p-4">{{ member.name }}</td>
+                        <td class="p-4">{{ member.role }}</td>
+                        <td class="p-4">{{ member.description }}</td>
+                        <td class="p-4">
+                            <div class="flex items-center justify-end pr-4 space-x-2">
+                                <button @click.prevent="editMember(member)"
+                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
+                                    <PencilSquareIcon class="w-5 h-4 mr-1"/>
                                     Edit
-                                </Button>
-                                <Button
-                                    variant="danger"
-                                    class="px-4 py-2 text-sm"
-                                    @click="deleteMember(member.id)"
-                                >
+                                </button>
+
+                                <button
+                                    @click.prevent="deleteMember(member.id)"
+                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
+                                    <TrashIcon class="w-5 h-4 mr-1"/>
                                     Delete
-                                </Button>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -70,6 +71,7 @@ import FileUpload from "@/Shared/FileUpload.vue";
 import Button from "@/Shared/Button.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {useStore} from "vuex";
+import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/solid/index.js";
 
 const store = useStore();
 const toast = useToast();
@@ -106,14 +108,15 @@ const submitMember = async () => {
 
         if (editingMemberId.value) {
             // Update existing member
-            await axios.post(route('admin.company.team.update', editingMemberId.value), formData);
-            const index = members.value.findIndex((m) => m.id === editingMemberId.value);
-            members.value[index] = {...members.value[index], ...form.value};
-            toast.success("Member updated successfully!");
+            axios.post(route('admin.company.team.update', editingMemberId.value), formData).then((response) => {
+                const index = members.value.findIndex((m) => m.id === editingMemberId.value);
+                members.value[index] = {...members.value[index], ...response.data.member};
+                toast.success("Member updated successfully!");
+            });
         } else {
             // Add new member
             const response = await axios.post(route('admin.company.team.store'), formData);
-            members.value.push(response.data.member);
+            members.value.unshift(response.data.member);
             toast.success("Member added successfully!");
         }
 
@@ -121,6 +124,8 @@ const submitMember = async () => {
     } catch (error) {
         toast.error("Failed to submit member.");
     } finally {
+        editingMemberId.value = null;
+        form.value = {name: '', role: '', description: '', photo: null};
         await store.dispatch('stopLoading');
     }
 };
@@ -129,7 +134,7 @@ const deleteMember = async (id) => {
     await store.dispatch('startLoading');
     if (confirm("Are you sure you want to delete this member?")) {
         try {
-            await axios.delete(route('admin.company.team.delete', id));
+            await axios.delete(route('admin.company.team.destroy', id));
             members.value = members.value.filter((member) => member.id !== id);
             toast.success("Member deleted successfully!");
         } catch (error) {

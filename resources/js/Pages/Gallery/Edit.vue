@@ -29,7 +29,7 @@ import { useStore} from "vuex";
 const store = useStore();
 const toast = useToast();
 const { props } = usePage();
-
+console.log(props.gallery);
 const form = useForm({
     name: props.gallery.name,
     description: props.gallery.description,

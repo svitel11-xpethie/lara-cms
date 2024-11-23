@@ -178,19 +178,19 @@ const toggleMenu = (menuId) => {
                             Profile
                         </Link>
                         <Link
-                            :href="route('admin.company.team')"
+                            :href="route('admin.company.team.index')"
                             class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
                         >
                             Team
                         </Link>
                         <Link
-                            :href="route('admin.company.social')"
+                            :href="route('admin.company.social.index')"
                             class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
                         >
                             Social
                         </Link>
                         <Link
-                            :href="route('admin.company.meta')"
+                            :href="route('admin.company.seo.index')"
                             class="block px-4 py-2 text-sm text-gray-300 rounded hover:bg-gray-800 hover:text-white"
                         >
                             SEO

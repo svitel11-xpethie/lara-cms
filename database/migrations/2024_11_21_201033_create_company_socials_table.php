@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('company_socials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->string('platform'); // e.g., facebook, twitter
             $table->string('url')->nullable();
             $table->string('icon')->nullable();

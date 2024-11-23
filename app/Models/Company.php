@@ -13,19 +13,4 @@ class Company extends Model
         'name', 'ceo', 'registration_number', 'address',
         'phone', 'email', 'website', 'about_us', 'logo'
     ];
-
-    public function socials()
-    {
-        return $this->hasMany(CompanySocial::class);
-    }
-
-    public function members()
-    {
-        return $this->hasMany(CompanyMember::class);
-    }
-
-    public function meta()
-    {
-        return $this->hasMany(CompanyMeta::class);
-    }
 }

@@ -14,7 +14,7 @@
                     <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Platform</th>
                     <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Icon</th>
                     <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">URL</th>
-                    <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Actions</th>
+                    <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600 text-right">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,22 +32,20 @@
                             <LinkIcon class="w-5 h-5 mr-1" /> {{ social.url }}
                         </a>
                     </td>
-                    <td class="py-4 px-4">
-                        <div class="flex items-center space-x-2">
-                            <Button
-                                variant="secondary"
-                                class="px-4 py-2 text-sm"
-                                @click="editSocial(social)"
-                            >
+                    <td class="p-4">
+                        <div class="flex items-center justify-end pr-4 space-x-2">
+                            <button @click="editSocial(social)"
+                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
+                                <PencilSquareIcon class="w-5 h-4 mr-1"/>
                                 Edit
-                            </Button>
-                            <Button
-                                variant="danger"
-                                class="px-4 py-2 text-sm"
+                            </button>
+
+                            <button
                                 @click="deleteSocial(social.id)"
-                            >
+                                class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
+                                <TrashIcon class="w-5 h-4 mr-1"/>
                                 Delete
-                            </Button>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -69,6 +67,7 @@ import {useStore} from "vuex";
 const store = useStore();
 
 import {LinkIcon} from "@heroicons/vue/24/solid";
+import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/solid/index.js";
 
 const toast = useToast();
 const socials = ref([]);
@@ -85,7 +84,7 @@ const fetchSocials = async () => {
     try {
         const response = await axios.get(route('admin.company.social.profiles'));
         socials.value = response.data;
-    } catch (error) {
+    } catch (error) {console.log(error);
         toast.error("Failed to load social profiles.");
     } finally {
         await store.dispatch('stopLoading');
@@ -100,18 +99,27 @@ const addSocial = async () => {
             formData.append(key, value);
         });
 
-        const response = await axios.post(route('admin.company.social.store'), formData);
-        socials.value.push(response.data);
-        form.value = {platform: '', url: '', icon: null};
-
-        const index = socials.value.findIndex((m) => m.id === editingSocialId.value);
-        socials.value[index] = {...socials.value[index], ...form.value};
-        //members.value[index] = {...members.value[index], ...form.value};
-
-        toast.success("Social profile added successfully!");
+        if (editingSocialId.value) {
+            // Update existing social profile
+            const response = await axios.post(route('admin.company.social.update', editingSocialId.value), formData);
+            const index = socials.value.findIndex((m) => m.id === editingSocialId.value);
+            socials.value[index] = {...socials.value[index], ...response.data.social};
+            toast.success("Social profile updated successfully!");
+        } else {
+            // Add new social profile
+            const response = await axios.post(route('admin.company.social.store'), formData);
+            socials.value.unshift(response.data.social);
+            toast.success("Social profile added successfully!");
+        }
     } catch (error) {
         toast.error("Failed to add social profile.");
     } finally {
+        editingSocialId.value = null;
+        form.value = {
+            platform: '',
+            url: '',
+            icon: null,
+        };
         await store.dispatch('stopLoading');
     }
 };

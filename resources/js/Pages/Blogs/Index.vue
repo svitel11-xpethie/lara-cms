@@ -40,18 +40,18 @@ const deleteBlog = (id) => {
                     <th class="p-4">Title</th>
                     <th class="p-4">Image</th>
                     <th class="p-4">Views</th>
-                    <th class="p-4">Actions</th>
+                    <th class="p-4 pr-12 text-right">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="blog in originalBlogs" :key="blog.id">
+                <tr v-for="blog in originalBlogs" :key="blog.id" class="border-b border-gray-100">
                     <td class="p-4">{{ blog.title }}</td>
                     <td class="p-4">
                         <img :src="blog.image_thumb" alt="" class="w-20 h-20 shadow-md rounded object-cover">
                     </td>
                     <td class="p-4">{{ blog.views }}</td>
-                    <td class="p-4">
-                        <div class="p-4 flex space-x-2">
+                    <td class="p-4 text-right">
+                        <div class="p-4 flex space-x-2 justify-end">
                             <!-- Edit Button -->
                             <Link
                                 :href="route('admin.blogs.edit', blog.id)"

@@ -3,8 +3,11 @@
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CloudController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\CompanySeoController;
+use App\Http\Controllers\Admin\CompanyTeamController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\CompanySocialController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -44,19 +47,17 @@ Route::middleware([
         Route::get('profile', [CompanyController::class, 'profile'])->name('profile');
         Route::post('profile/update', [CompanyController::class, 'updateProfile'])->name('updateProfile');
 
-        Route::get('team', [CompanyController::class, 'team'])->name('team');
-        Route::get('team/members', [CompanyController::class, 'teamMembers'])->name('team.members');
-        Route::post('team', [CompanyController::class, 'storeMember'])->name('team.store');
-        Route::post('team/{member}', [CompanyController::class, 'storeMember'])->name('team.update');
-        Route::delete('team/{member}', [CompanyController::class, 'deleteMember'])->name('team.delete');
+        Route::resource('team', CompanyTeamController::class)->except(['show', 'create', 'edit', 'update']);
+        Route::post('team/{team}', [CompanyTeamController::class, 'update'])->name('team.update');
+        Route::get('team/members', [CompanyTeamController::class, 'members'])->name('team.members');
 
-        Route::get('social', [CompanyController::class, 'social'])->name('social');
-        Route::get('social/profiles', [CompanyController::class, 'socialProfiles'])->name('social.profiles');
-        Route::post('social', [CompanyController::class, 'storeSocial'])->name('social.store');
-        Route::post('social/{social}', [CompanyController::class, 'storeSocial'])->name('social.update');
-        Route::delete('social/{social}', [CompanyController::class, 'deleteSocial'])->name('social.delete');
+        Route::resource('social', CompanySocialController::class)->except(['show', 'create', 'edit', 'update']);
+        Route::post('social/{social}', [CompanySocialController::class, 'update'])->name('social.update');
+        Route::get('social/profiles', [CompanySocialController::class, 'profiles'])->name('social.profiles');
 
-        Route::get('meta', [CompanyController::class, 'meta'])->name('meta');
-        Route::put('meta', [CompanyController::class, 'updateMeta'])->name('meta.update');
+        Route::resource('seo', CompanySeoController::class)->except(['show', 'create', 'edit']);
+        Route::get('seo/metas', [CompanySeoController::class, 'metas'])->name('seo.metas');
+
     });
+
 });

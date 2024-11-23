@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
-use App\Models\CompanyMember;
 use App\Models\CompanySocial;
 use App\Services\UploadService;
 use Illuminate\Http\Request;
@@ -86,118 +85,6 @@ class CompanyController extends Controller
         }
 
         return redirect()->back()->with('success', 'Profile updated successfully!');
-    }
-
-
-    public function team()
-    {
-        return inertia('Company/Team');
-    }
-
-    public function teamMembers()
-    {
-        return response()->json(CompanyMember::orderBy('id')->get());
-    }
-
-    public function storeMember(Request $request)
-    {
-        try {
-            // Validate input
-            $validated = $request->validate([
-                'id' => 'nullable|exists:company_members,id', // For updates
-                'name' => 'required|string|max:255',
-                'role' => 'nullable|string|max:255',
-                'photo' => $request->hasFile('photo')
-                    ? 'file|image|mimes:jpeg,png,jpg,svg,webp|max:2048'
-                    : 'nullable',
-                'description' => 'nullable|string',
-            ]);
-
-            $validated['company_id'] = Company::first()->id;
-
-            // Handle photo upload
-            if ($request->hasFile('photo')) {
-                $validated['photo'] = UploadService::handleImageUpload(
-                    image: $request->file('photo'),
-                    path: 'companies/team',
-                    convertTo: 'webp',
-                    resizeWidth: 500,
-                    resizeHeight: 500
-                );
-            } else {
-                unset($validated['photo']);
-            }
-
-            // Check if it's an update or create request
-            if (!empty($validated['id'])) {
-                $member = CompanyMember::findOrFail($validated['id']);
-                $member->update($validated);
-                $message = 'Team member updated successfully!';
-            } else {
-                CompanyMember::create($validated);
-                $message = 'Team member added successfully!';
-            }
-
-            return redirect()->back()->with('success', $message);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
-        }
-    }
-
-    public function deleteMember(CompanyMember $member)
-    {
-        $member->delete();
-        return response()->json(['message' => 'Team member deleted successfully!']);
-    }
-
-
-    public function social()
-    {
-        $socials = CompanySocial::orderBy('id')->get();
-        return inertia('Company/Social', ['socials' => $socials]);
-    }
-
-    public function socialProfiles()
-    {
-        return response()->json(CompanySocial::orderBy('id')->get());
-    }
-
-    public function storeSocial(Request $request)
-    {
-        $validated = $request->validate([
-            'id' => 'nullable|exists:company_socials,id', // For updates
-            'platform' => 'required|string|max:255',
-            'url' => 'required|url|max:255',
-            'icon' => $request->hasFile('icon')
-                ? 'file|image|mimes:jpeg,png,jpg,svg,webp|max:2048'
-                : 'nullable',
-        ]);
-
-        // Handle icon upload
-        if ($request->hasFile('icon')) {
-            $validated['icon'] = UploadService::handleImageUpload(
-                image: $request->file('icon'),
-                path: 'companies/socials',
-                resizeWidth: 100,
-                resizeHeight: 100
-            );
-        } else {
-            unset($validated['icon']);
-        }
-
-
-        // Check if it's an update or create request
-        if (!empty($validated['id'])) {
-            $social = CompanySocial::findOrFail($validated['id']);
-            $social->update($validated);
-            $message = 'Social link updated successfully!';
-        } else {
-            $validated['company_id'] = Company::first()->id;
-            CompanySocial::create($validated);
-            $message = 'Social link added successfully!';
-        }
-
-        return response()->json(['message' => $message]);
     }
 
 

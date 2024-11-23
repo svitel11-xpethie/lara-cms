@@ -13,7 +13,7 @@ const props = defineProps(['company']);
 
 const company = ref({...props.company});
 
-
+console.log(company.value);
 const saveCompany = async () => {
     const formData = new FormData();
     Object.entries(company.value).forEach(([key, value]) => {
@@ -55,7 +55,7 @@ const saveCompany = async () => {
             <div>
                 <label for="logo" class="block text-sm font-medium text-gray-700">Logo</label>
                 <FileUpload v-model="company.logo" id="logo"/>
-                <img v-if="company.logo" :src="company.logo" alt="Logo" class="mt-4 max-w-xs"/>
+                <img v-if="company.logo && company.logo !== 'null'" :src="company.logo" alt="Logo" class="mt-4 max-w-xs"/>
             </div>
 
             <!-- Submit Button -->

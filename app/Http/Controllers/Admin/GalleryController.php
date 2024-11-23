@@ -103,7 +103,7 @@ class GalleryController extends Controller
 
     public function edit(Gallery $gallery)
     {
-        return inertia('Gallery/Edit', ['gallery' => $gallery]);
+        return inertia('Gallery/Edit', ['gallery' => (new GalleryCollection($gallery))->toArray(request())]);
     }
 
     public function update(GalleryRequest $request, Gallery $gallery)

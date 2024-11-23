@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Helpers\StringHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,10 +18,10 @@ class GalleryCollection extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'category' => $this->category,
-            'tags' => $this->tags,
-            'alt' => $this->alt,
+            'description' => StringHelper::nullStrToNull($this->description),
+            'category' => StringHelper::nullStrToNull($this->category),
+            'tags' => StringHelper::nullStrToNull($this->tags),
+            'alt' => StringHelper::nullStrToNull($this->alt),
             'image' => $this->image,
             'image_thumb' => $this->image_thumb,
             'orientation' => $this->orientation,

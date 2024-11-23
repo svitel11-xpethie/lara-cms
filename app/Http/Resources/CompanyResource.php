@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Helpers\StringHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -12,17 +13,17 @@ class CompanyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'ceo' => $this->ceo,
-            'registration_number' => $this->registration_number,
-            'address' => $this->address,
-            'phone' => $this->phone,
-            'email' => $this->email,
-            'website' => $this->website,
-            'about_us' => $this->about_us,
-            'socials' => $this->socials,
-            'members' => $this->members,
-            'logo' => $this->logo,
-            'meta' => $this->meta,
+            'ceo' => StringHelper::nullStrToNull($this->ceo),
+            'registration_number' => StringHelper::nullStrToNull($this->registration_number),
+            'address' => StringHelper::nullStrToNull($this->address),
+            'phone' => StringHelper::nullStrToNull($this->phone),
+            'email' => StringHelper::nullStrToNull($this->email),
+            'website' => StringHelper::nullStrToNull($this->website),
+            'about_us' => StringHelper::nullStrToNull($this->about_us),
+            'socials' => StringHelper::nullStrToNull($this->socials),
+            'members' => StringHelper::nullStrToNull($this->members),
+            'logo' => StringHelper::nullStrToNull($this->logo),
+            'meta' => StringHelper::nullStrToNull($this->meta),
         ];
     }
 }

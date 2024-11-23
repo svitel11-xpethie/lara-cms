@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('company_members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('description', 555)->nullable();
             $table->string('photo')->nullable();
             $table->string('role')->nullable(); // e.g., CFO, Marketing Manager
+            $table->integer('order')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

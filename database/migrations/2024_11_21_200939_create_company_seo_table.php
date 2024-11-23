@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company_meta', function (Blueprint $table) {
+        Schema::create('company_seo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->string('key'); // e.g., seo_title, seo_description
             $table->text('value')->nullable();
             $table->timestamps();
@@ -25,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('company_meta', function (Blueprint $table) { // Correct table name
-            $table->dropForeign(['company_id']); // Drop the foreign key
-        });
-        Schema::dropIfExists('company_meta'); // Correct table name
+        Schema::dropIfExists('company_seo'); // Correct table name
     }
 };

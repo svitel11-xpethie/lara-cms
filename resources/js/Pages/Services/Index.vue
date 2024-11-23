@@ -40,18 +40,18 @@ const deleteServices = (id) => {
                     <th class="p-4">Title</th>
                     <th class="p-4">Image</th>
                     <th class="p-4">Views</th>
-                    <th class="p-4">Actions</th>
+                    <th class="p-4 pr-12 text-right">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="service in originalServices" :key="service.id">
+                <tr v-for="service in originalServices" :key="service.id" class="border-b border-gray-100">
                     <td class="p-4">{{ service.title }}</td>
                     <td class="p-4">
                         <img :src="service.image_thumb" alt="" class="w-20 h-20 shadow-md rounded object-cover">
                     </td>
                     <td class="p-4">{{ service.views }}</td>
                     <td class="p-4">
-                        <div class="p-4 flex space-x-2">
+                        <div class="p-4 flex space-x-2 justify-end">
                             <!-- Edit Button -->
                             <Link
                                 :href="route('admin.services.edit', service.id)"
