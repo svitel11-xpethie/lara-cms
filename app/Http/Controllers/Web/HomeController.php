@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $gallery_images = Gallery::orderBy('order', 'ASC')->take(6)->get();
+        /*$gallery_images = Gallery::orderBy('order', 'ASC')->take(6)->get();
 
         $blog_posts = Blog::take(3)
             ->orderBy('id', 'DESC')
@@ -32,12 +32,12 @@ class HomeController extends Controller
                     ? substr(strip_tags($blog->content), 0, 150) . '...'
                     : strip_tags($blog->content);
                 return $blog;
-            });
+            });*/
 
         return view('web.pages.home.index', [
-            'gallery_images' => $gallery_images,
+            /*'gallery_images' => $gallery_images,
             'blog_posts' => $blog_posts,
-            'services' => $services,
+            'services' => $services,*/
         ]);
     }
 }

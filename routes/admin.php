@@ -16,7 +16,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->prefix('admin')->as('admin.')->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
