@@ -88,10 +88,10 @@ class CompanyTeamController extends Controller
     }
 
 
-    public function destroy(CompanyMember $member)
+    public function destroy(CompanyMember $team)
     {
         try {
-            $member->delete();
+            $team->delete();
 
             return response()->json(['message' => 'Team member deleted successfully!']);
         } catch (\Exception $e) {

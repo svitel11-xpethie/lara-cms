@@ -1,46 +1,3 @@
-<template>
-    <AppLayout title="Meta/SEO">
-        <form @submit.prevent="addOrUpdateMeta" class="space-y-4 p-8 bg-white shadow">
-            <TextInput v-model="form.key" label="Meta Key (e.g., seo_title, seo_description)" />
-            <Textarea v-model="form.value" label="Meta Value (Content)" />
-            <Button type="submit">{{ editingMetaId ? 'Update Meta' : 'Add Meta' }}</Button>
-        </form>
-
-        <div class="overflow-x-auto mt-6">
-            <table class="min-w-full bg-white border rounded-lg shadow-md">
-                <thead>
-                <tr>
-                    <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Key</th>
-                    <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600">Value</th>
-                    <th class="py-3 px-4 text-left bg-gray-200 font-bold uppercase text-sm text-gray-600 text-right pr-4">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(meta, idx) in metas" :key="idx" class="hover:bg-gray-50">
-                    <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ meta.key }}</td>
-                    <td class="py-4 px-4 text-sm text-gray-600">{{ meta.value }}</td>
-                    <td class="p-4">
-                        <div class="flex items-center justify-end pr-4 space-x-2">
-                            <button @click="editMeta(meta)"
-                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
-                                <PencilSquareIcon class="w-5 h-4 mr-1"/>
-                                Edit
-                            </button>
-
-                            <button
-                                @click="deleteMeta(meta.id)"
-                                class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
-                                <TrashIcon class="w-5 h-4 mr-1"/>
-                                Delete
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </AppLayout>
-</template>
 
 <script setup>
 import { ref, onMounted } from "vue";
@@ -52,6 +9,7 @@ import Button from "@/Shared/Button.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { useStore } from "vuex";
 import {PencilSquareIcon, TrashIcon} from "@heroicons/vue/24/solid/index.js";
+import Draggable from 'vuedraggable';
 
 const store = useStore();
 const toast = useToast();
@@ -121,5 +79,60 @@ const editMeta = (meta) => {
     form.value = { key: meta.key, value: meta.value };
 };
 
+const updateOrder = async () => {
+    await store.dispatch("startLoading");
+    try {
+        const order = metas.value.map((meta, index) => ({ id: meta.id, order: index }));
+        await axios.post(route("admin.company.seo.updateOrder"), { order });
+        toast.success("Meta order updated successfully!");
+    } catch (error) {
+        toast.error("Failed to update Meta order.");
+    } finally {
+        await store.dispatch("stopLoading");
+    }
+};
+
 onMounted(fetchMetas);
 </script>
+
+
+<template>
+    <AppLayout title="Meta/SEO">
+        <form @submit.prevent="addOrUpdateMeta" class="space-y-4 p-8 bg-white shadow">
+            <TextInput v-model="form.key" label="Meta Key (e.g., seo_title, seo_description)" />
+            <Textarea v-model="form.value" label="Meta Value (Content)" />
+            <Button type="submit">{{ editingMetaId ? 'Update Meta' : 'Add Meta' }}</Button>
+        </form>
+
+        <draggable
+            v-model="metas"
+            @end="updateOrder"
+            class="overflow-x-auto mt-6 space-y-2"
+        >
+            <template #item="{element}">
+                <div class="flex items-center justify-between bg-white border rounded-lg p-4 shadow-sm">
+                    <div>
+                        <p class="text-lg font-semibold">{{ element.key }}</p>
+                        <p class="text-sm text-gray-500">{{ element.value }}</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="flex items-center justify-end pr-4 space-x-2">
+                            <button @click="editMeta(meta)"
+                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
+                                <PencilSquareIcon class="w-5 h-4 mr-1"/>
+                                Edit
+                            </button>
+
+                            <button
+                                @click="deleteMeta(meta.id)"
+                                class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
+                                <TrashIcon class="w-5 h-4 mr-1"/>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </draggable>
+    </AppLayout>
+</template>

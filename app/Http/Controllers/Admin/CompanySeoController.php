@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SeoRequest;
 use App\Http\Resources\SeoResource;
-use App\Http\Resources\SocialResource;
-use App\Models\Company;
 use App\Models\CompanySeo;
 use App\Models\CompanySocial;
 use Illuminate\Http\Request;
@@ -22,7 +20,7 @@ class CompanySeoController extends Controller
     {
         return response()->json(
             SeoResource::collection(
-                CompanySeo::orderBy('id', 'DESC')->get()
+                CompanySeo::orderBy('order')->get()
             )
         );
     }
@@ -59,5 +57,18 @@ class CompanySeoController extends Controller
     {
         $social->delete();
         return response()->json(['message' => 'Social link deleted successfully!']);
+    }
+
+
+    public function updateOrder(Request $request)
+    {
+        try {
+            $orders = $request->input('order');
+            foreach ($orders as $order) {
+                CompanySeo::where('id', $order['id'])->update(['order' => $order['order']]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }

@@ -16,7 +16,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->prefix('admin')->as('admin.')->group(function () {
-    Route::get('/', function () {
+    Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
@@ -27,8 +27,10 @@ Route::middleware([
 
     // SERVICES
     Route::resource('services', ServicesController::class)
-        ->except(['update']); // Exclude default update route
+        ->except(['update', 'show']); // Exclude default update route
     Route::post('services/{service}', [ServicesController::class, 'update'])->name('services.update');
+    Route::get('services/all', [ServicesController::class, 'services'])->name('services.services');
+    Route::post('services/update/order', [ServicesController::class, 'updateOrder'])->name('services.updateOrder');
 
     // GALLERIES
     Route::resource('galleries', GalleryController::class)->except(['show', 'update']);
@@ -53,12 +55,12 @@ Route::middleware([
         Route::get('team/members', [CompanyTeamController::class, 'members'])->name('team.members');
 
         Route::resource('social', CompanySocialController::class)->except(['show', 'create', 'edit', 'update']);
+        Route::post('social/update/order', [CompanySocialController::class, 'updateOrder'])->name('social.updateOrder');
         Route::post('social/{social}', [CompanySocialController::class, 'update'])->name('social.update');
         Route::get('social/profiles', [CompanySocialController::class, 'profiles'])->name('social.profiles');
 
         Route::resource('seo', CompanySeoController::class)->except(['show', 'create', 'edit']);
         Route::get('seo/metas', [CompanySeoController::class, 'metas'])->name('seo.metas');
-
+        Route::post('seo/update/order', [CompanySeoController::class, 'updateOrder'])->name('seo.updateOrder');
     });
-
 });

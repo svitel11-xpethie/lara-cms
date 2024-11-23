@@ -20,7 +20,7 @@ class CompanySocialController extends Controller
     {
         return response()->json(
             SocialResource::collection(
-                CompanySocial::orderBy('id', 'DESC')->get()
+                CompanySocial::orderBy('order')->get()
             )
         );
     }

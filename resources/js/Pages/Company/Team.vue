@@ -1,58 +1,3 @@
-<template>
-    <AppLayout title="Team">
-        <div class="space-y-4">
-            <!-- Add/Update Member Form -->
-            <form @submit.prevent="submitMember" class="space-y-4 p-8 bg-white shadow-md">
-                <div class="flex xs:flex-wrap sm:space-x-4">
-                    <TextInput class="w-1/2 xs:w-full" v-model="form.name" label="Member Name" />
-                    <TextInput class="w-1/2 xs:w-full" v-model="form.role" label="Role" />
-                </div>
-
-                <Textarea v-model="form.description" label="Description" />
-                <FileUpload v-model="form.photo" label="Photo" />
-                <Button type="submit">{{ editingMemberId ? 'Update Member' : 'Add Member' }}</Button>
-            </form>
-
-            <!-- Members List with Drag-and-Drop -->
-            <draggable
-                v-model="members"
-                @end="updateOrder"
-                item-key="id"
-                class="space-y-2"
-            >
-                <template #item="{ element }">
-                    <div class="flex items-center justify-between bg-white border rounded-lg p-4 shadow-sm">
-                        <div class="flex items-center space-x-4">
-                            <img
-                                :src="element.photo"
-                                alt="Photo"
-                                class="w-16 h-16 object-cover rounded-full"
-                            />
-                            <div>
-                                <p class="font-semibold">{{ element.name }}</p>
-                                <p class="text-gray-600 text-sm">{{ element.role }}</p>
-                            </div>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button @click="editMember(element)"
-                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
-                                <PencilSquareIcon class="w-5 h-4 mr-1"/>
-                                Edit
-                            </button>
-
-                            <button
-                                @click="deleteMember(element.id)"
-                                class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
-                                <TrashIcon class="w-5 h-4 mr-1"/>
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </template>
-            </draggable>
-        </div>
-    </AppLayout>
-</template>
 
 <script setup>
 import { ref, onMounted } from "vue";
@@ -171,3 +116,59 @@ const updateOrder = async () => {
 
 onMounted(fetchMembers);
 </script>
+
+<template>
+    <AppLayout title="Team">
+        <div class="space-y-4">
+            <!-- Add/Update Member Form -->
+            <form @submit.prevent="submitMember" class="space-y-4 p-8 bg-white shadow-md">
+                <div class="flex xs:flex-wrap sm:space-x-4">
+                    <TextInput class="w-1/2 xs:w-full" v-model="form.name" label="Member Name" />
+                    <TextInput class="w-1/2 xs:w-full" v-model="form.role" label="Role" />
+                </div>
+
+                <Textarea v-model="form.description" label="Description" />
+                <FileUpload v-model="form.photo" label="Photo" />
+                <Button type="submit">{{ editingMemberId ? 'Update Member' : 'Add Member' }}</Button>
+            </form>
+
+            <!-- Members List with Drag-and-Drop -->
+            <draggable
+                v-model="members"
+                @end="updateOrder"
+                item-key="id"
+                class="space-y-2"
+            >
+                <template #item="{ element }">
+                    <div class="flex items-center justify-between bg-white border rounded-lg p-4 shadow-sm">
+                        <div class="flex items-center space-x-4">
+                            <img
+                                :src="element.photo"
+                                alt="Photo"
+                                class="w-16 h-16 object-cover rounded-full"
+                            />
+                            <div>
+                                <p class="font-semibold">{{ element.name }}</p>
+                                <p class="text-gray-600 text-sm">{{ element.role }}</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button @click="editMember(element)"
+                                    class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center">
+                                <PencilSquareIcon class="w-5 h-4 mr-1"/>
+                                Edit
+                            </button>
+
+                            <button
+                                @click="deleteMember(element.id)"
+                                class="px-2 py-1 opacity-70 hover:opacity-100 transition-opacity bg-red-500 text-white rounded hover:bg-red-600 flex items-center">
+                                <TrashIcon class="w-5 h-4 mr-1"/>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </draggable>
+        </div>
+    </AppLayout>
+</template>

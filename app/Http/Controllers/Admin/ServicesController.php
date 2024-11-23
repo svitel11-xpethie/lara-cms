@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ServiceRequest;
+use App\Http\Resources\ServicesResource;
 use App\Models\Service;
 use App\Services\UploadService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ServicesController extends Controller
 {
     public function index()
     {
-        $services = Service::orderBy('order')->get();
-        return inertia('Services/Index', compact('services'));
+        return inertia('Services/Index');
+    }
+
+    public function services()
+    {
+        return ServicesResource::collection(
+            Service::orderBy('order')->get()
+        );
     }
 
     public function create()
@@ -66,5 +74,19 @@ class ServicesController extends Controller
     {
         $service->delete();
         return response()->json(['message' => 'Service deleted successfully']);
+    }
+
+    public function updateOrder(Request $request)
+    {
+        try {
+            $orders = $request->input('order');
+            foreach ($orders as $order) {
+                Service::where('id', $order['id'])->update(['order' => $order['order']]);
+            }
+
+            return response()->json(['message' => 'Order updated successfully!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }
