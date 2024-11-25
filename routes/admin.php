@@ -5,9 +5,13 @@ use App\Http\Controllers\Admin\CloudController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\CompanySeoController;
 use App\Http\Controllers\Admin\CompanyTeamController;
+use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FormRequestController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\ScriptController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\CompanySocialController;
+use App\Http\Controllers\Admin\TestimonialController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -63,4 +67,30 @@ Route::middleware([
         Route::get('seo/metas', [CompanySeoController::class, 'metas'])->name('seo.metas');
         Route::post('seo/update/order', [CompanySeoController::class, 'updateOrder'])->name('seo.updateOrder');
     });
+
+    // FORM REQUESTS
+    Route::prefix('form-requests')->name('form_requests.')->group(function () {
+        Route::get('/', [FormRequestController::class, 'index'])->name('index'); // List requests
+        Route::get('/messages', [FormRequestController::class, 'messages'])->name('messages'); // List requests
+        Route::post('/{formRequest}/send-email', [FormRequestController::class, 'sendEmail'])->name('sendEmail'); // Send email
+        Route::post('/{formRequest}/send-whatsapp', [FormRequestController::class, 'sendWhatsApp'])->name('sendWhatsApp'); // Send WhatsApp
+        Route::delete('/{formRequest}', [FormRequestController::class, 'destroy'])->name('destroy'); // Delete request
+    });
+
+    // TESTIMONIALS
+    Route::resource('testimonials', TestimonialController::class)->except(['show', 'update']); // Exclude default update route
+    Route::post('testimonials/update/order', [TestimonialController::class, 'updateOrder'])->name('testimonials.updateOrder');
+    Route::get('testimonials/testimonials', [TestimonialController::class, 'testimonials'])->name('testimonials.testimonials');
+    Route::post('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('testimonials.update');
+
+    // SCRIPTS
+    Route::resource('scripts', ScriptController::class)->except(['show', 'update']); // Exclude default update route
+    Route::get('scripts/scripts', [ScriptController::class, 'scripts'])->name('scripts.scripts');
+    Route::post('scripts/update/order', [ScriptController::class, 'updateOrder'])->name('scripts.updateOrder');
+    Route::post('scripts/{script}', [ScriptController::class, 'update'])->name('scripts.update');
+
+    // FAQS
+    Route::resource('faq', FaqController::class)->except(['show', 'create', 'edit']);
+    Route::get('faq/faqs', [FaqController::class, 'faqs'])->name('faq.faqs');
+    Route::post('faq/update/order', [FaqController::class, 'updateOrder'])->name('faq.updateOrder');
 });

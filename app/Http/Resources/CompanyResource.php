@@ -17,6 +17,7 @@ class CompanyResource extends JsonResource
             'registration_number' => StringHelper::nullStrToNull($this->registration_number),
             'address' => StringHelper::nullStrToNull($this->address),
             'phone' => StringHelper::nullStrToNull($this->phone),
+            'phone_website' => StringHelper::nullStrToNull($this->phone_website),
             'email' => StringHelper::nullStrToNull($this->email),
             'website' => StringHelper::nullStrToNull($this->website),
             'about_us' => StringHelper::nullStrToNull($this->about_us),

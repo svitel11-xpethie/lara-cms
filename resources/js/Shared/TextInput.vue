@@ -4,9 +4,10 @@
         <input
             :id="name"
             :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        type="text"
-        class="mt-1 block w-full rounded border-gray-300 shadow-sm"
+            @input="$emit('update:modelValue', $event.target.value)"
+            type="text"
+            :placeholder="placeholder"
+            class="mt-1 block w-full rounded border-gray-300 shadow-sm"
         />
     </div>
 </template>
@@ -17,15 +18,20 @@ const props = defineProps({
         type: [String, Number],
         required: true,
     },
-    label:{
+    label: {
         type: String,
         required: false,
         default: 'Enter text here',
     },
-    name:{
+    name: {
         type: String,
         required: false,
         default: 'text',
+    },
+    placeholder: {
+        type: String,
+        required: false,
+        default: 'Enter text here',
     },
 });
 </script>

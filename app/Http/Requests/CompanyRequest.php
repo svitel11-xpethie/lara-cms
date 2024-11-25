@@ -19,6 +19,7 @@ class CompanyRequest extends FormRequest
             'registration_number' => 'nullable|string|max:255',
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:255',
+            'phone_website' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255',
             'website' => 'nullable|string|max:255',
             'about_us' => 'nullable|string',

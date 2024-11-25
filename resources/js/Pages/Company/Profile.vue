@@ -13,7 +13,6 @@ const props = defineProps(['company']);
 
 const company = ref({...props.company});
 
-console.log(company.value);
 const saveCompany = async () => {
     const formData = new FormData();
     Object.entries(company.value).forEach(([key, value]) => {
@@ -40,7 +39,7 @@ const saveCompany = async () => {
                        placeholder="Enter registration number"/>
             <TextInput v-model="company.address" label="Address" placeholder="Enter address"/>
             <TextInput v-model="company.phone" label="Phone" placeholder="Enter phone number"/>
-            <TextInput v-model="company.phone_on_website" label="Phone (Website)"
+            <TextInput v-model="company.phone_website" label="Phone (Website)"
                        placeholder="Enter phone for website"/>
             <TextInput v-model="company.email" label="Email" placeholder="Enter email"/>
             <TextInput v-model="company.website" label="Website" placeholder="Enter website URL"/>

@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company_seo', function (Blueprint $table) {
+        Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
-            $table->string('key'); // e.g., seo_title, seo_description
-            $table->text('value')->nullable();
+            $table->string('name');
+            $table->text('content');
+            $table->string('position')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->integer('order')->default(0);
             $table->timestamps();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('company_seo'); // Correct table name
+        Schema::dropIfExists('testimonials');
     }
 };

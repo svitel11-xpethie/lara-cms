@@ -19,6 +19,7 @@ class SocialResource extends JsonResource
             'platform' => $this->platform,
             'url' => $this->url,
             'icon' => $this->icon,
+            'order' => $this->order,
         ];
     }
 }

@@ -9,7 +9,10 @@ import {
     CloudArrowUpIcon,
     PhotoIcon,
     HomeModernIcon,
-    UserGroupIcon
+    EnvelopeIcon,
+    CodeBracketSquareIcon,
+    HeartIcon,
+    QuestionMarkCircleIcon
 } from "@heroicons/vue/16/solid/index.js";
 
 const activeMenu = ref(null);
@@ -113,17 +116,6 @@ const toggleMenu = (menuId) => {
                     </div>
                 </li>
 
-                <!-- Cloud Menu -->
-                <li class="nav-item">
-                    <Link
-                        :href="route('admin.cloud.index')"
-                        class="flex items-center w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
-                    >
-                        <CloudArrowUpIcon class="w-5 h-5 mr-2" />
-                        Cloud
-                    </Link>
-                </li>
-
                 <!-- Gallery Menu -->
                 <li class="nav-item">
                     <button
@@ -196,6 +188,61 @@ const toggleMenu = (menuId) => {
                             SEO
                         </Link>
                     </div>
+                </li>
+
+                <!-- Cloud Menu -->
+                <li class="nav-item">
+                    <Link
+                        :href="route('admin.cloud.index')"
+                        class="flex items-center w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <CloudArrowUpIcon class="w-5 h-5 mr-2" />
+                        Cloud
+                    </Link>
+                </li>
+
+                <!-- Requests Menu -->
+                <li class="nav-item">
+                    <Link
+                        :href="route('admin.form_requests.index')"
+                        class="flex items-center w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <EnvelopeIcon class="w-5 h-5 mr-2" />
+                        Form Requests
+                    </Link>
+                </li>
+
+                <!-- Scripts Menu -->
+                <li class="nav-item">
+                    <Link
+                        :href="route('admin.scripts.index')"
+                        class="flex items-center w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <CodeBracketSquareIcon class="w-5 h-5 mr-2" />
+                        Scripts
+                    </Link>
+                </li>
+
+                <!-- Testimonials Menu -->
+                <li class="nav-item">
+                    <Link
+                        :href="route('admin.testimonials.index')"
+                        class="flex items-center w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <HeartIcon class="w-5 h-5 mr-2" />
+                        Testimonials
+                    </Link>
+                </li>
+
+                <!-- Testimonials Menu -->
+                <li class="nav-item">
+                    <Link
+                        :href="route('admin.faq.index')"
+                        class="flex items-center w-full px-4 py-2 text-left text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                    >
+                        <QuestionMarkCircleIcon class="w-5 h-5 mr-2" />
+                        Faqs
+                    </Link>
                 </li>
             </ul>
         </nav>

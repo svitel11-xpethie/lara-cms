@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SeoResource extends JsonResource
+class ScriptResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,12 @@ class SeoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'key' => $this->key,
-            'value' => $this->value,
+            'name' => $this->name,
+            'script' => $this->script,
+            'position' => $this->position,
+            'is_active' => $this->is_active,
+            'image' => $this->image ?? '/assets/images/defaults/script.png',
             'order' => $this->order,
-            'created_at' => $this->created_at->format('d M Y'),
         ];
     }
 }

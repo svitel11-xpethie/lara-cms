@@ -38,10 +38,10 @@ class CompanySocialController extends Controller
                     resizeHeight: 100
                 );
             } else {
-                unset($validated['icon']);
+                unset($data['icon']);
             }
 
-            CompanySocial::create($validated);
+            CompanySocial::create($data);
 
             return response()->json([
                 'message' => 'Social link added successfully!',

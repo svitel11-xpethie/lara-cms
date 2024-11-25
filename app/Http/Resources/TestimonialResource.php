@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SeoResource extends JsonResource
+class TestimonialResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,11 @@ class SeoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'key' => $this->key,
-            'value' => $this->value,
+            'name' => $this->name,
+            'content' => $this->content,
             'order' => $this->order,
-            'created_at' => $this->created_at->format('d M Y'),
+            'image' => $this->image ?? '/assets/images/defaults/heart.png',
+            'is_active' => $this->is_active,
         ];
     }
 }

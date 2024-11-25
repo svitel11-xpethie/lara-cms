@@ -32,7 +32,9 @@
                 <option value="monospace">Monospace</option>
             </select>
 
-            <select @change="setFontSize($event.target.value)" class="p-1 bg-white h-8 w-[100px] border rounded">
+            <select
+                v-model="activeFontSize"
+                @change="setFontSize($event.target.value)" class="p-1 bg-white h-8 w-[100px] border rounded">
                 <option value="12px">12px</option>
                 <option value="14px">14px</option>
                 <option value="16px">16px</option>
@@ -168,6 +170,21 @@ const emit = defineEmits(['update:modelValue']);
 
 const editor = ref(null);
 
+const activeFontSize = ref('16px'); // Default font size
+const updateActiveFontSize = () => {
+    if (editor.value) {
+        // Get the font size of the current selection
+        activeFontSize.value = editor.value.getAttributes('textStyle').fontSize || '16px';
+    }
+};
+
+// Watch for selection changes to update the font size dynamically
+const watchEditorSelection = () => {
+    if (editor.value) {
+        editor.value.on('selectionUpdate', updateActiveFontSize);
+    }
+};
+
 onMounted(() => {
     editor.value = new Editor({
         content: props.modelValue,
@@ -203,6 +220,7 @@ onMounted(() => {
     });
 
     watchEditorActiveStates();
+    watchEditorSelection(); // Add this line
 });
 
 onBeforeUnmount(() => {
@@ -239,7 +257,11 @@ const toggleTaskList = () => editor.value.chain().focus().toggleTaskList().run()
 const toggleBulletList = () => editor.value.chain().focus().toggleBulletList().run();
 const toggleOrderedList = () => editor.value.chain().focus().toggleOrderedList().run();
 const insertTable = () => editor.value.chain().focus().insertTable({rows: 3, cols: 3}).run();
-const setFontSize = (size) => editor.value.chain().focus().setFontSize(size).run();
+//const setFontSize = (size) => editor.value.chain().focus().setFontSize(size).run();
+const setFontSize = (size) => {
+    editor.value.chain().focus().setFontSize(size).run();
+    activeFontSize.value = size; // Update reactive variable
+};
 
 const insertPlaceholder = (placeholder) => {
     editor.value.chain().focus().insertContent(placeholder).run();

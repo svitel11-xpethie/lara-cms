@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SeoResource extends JsonResource
+class FaqResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,10 @@ class SeoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'key' => $this->key,
-            'value' => $this->value,
+            'question' => $this->question,
+            'answer' => $this->answer,
             'order' => $this->order,
-            'created_at' => $this->created_at->format('d M Y'),
+            'is_active' => $this->is_active,
         ];
     }
 }
